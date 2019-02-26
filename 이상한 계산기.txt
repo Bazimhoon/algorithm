@@ -1,0 +1,56 @@
+#include <iostream>
+using namespace std;
+#include<queue>
+#include<utility>
+const int MAX = 300000;
+queue<pair<int, int>> Queue;
+long int n;
+long int cnt = 0;
+bool arr[MAX] = { 0 };
+
+
+void bfs(long int goal) {
+	Queue.push(make_pair(1, 0));
+	arr[1] = true;
+
+	while (!Queue.empty()) {
+		pair<int, int> num = Queue.front();
+		Queue.pop();
+		cnt = num.second+1;
+		if(num.first == goal){
+		  cout << num.second;
+		  break;
+		}
+		
+
+		long int mul_cal = num.first * 2;
+		if (mul_cal == goal) {
+			cout << cnt;
+			break;
+		}
+
+		if (mul_cal < MAX && !arr[mul_cal]) {
+			Queue.push(make_pair(mul_cal, cnt));
+			arr[mul_cal] = true;
+		}
+
+		long int div_cal = num.first / 3;
+		if (div_cal == goal) {
+			cout << cnt;
+			break;
+		}
+		if (div_cal != 0 && div_cal < MAX && !arr[div_cal]) {
+			Queue.push(make_pair(div_cal, cnt));
+			arr[div_cal] = true;
+		}
+
+	}
+}
+int main() {
+
+	cin >> n;
+
+	bfs(n);
+
+	return 0;
+}
