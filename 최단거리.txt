@@ -1,0 +1,58 @@
+#include<iostream>
+using namespace std;
+#include<vector>
+const int MAX = 10000;
+int cost = 1;
+vector<int> Vertex[MAX];
+int n, m, start, end2;
+int Table[MAX];
+bool Check[MAX];
+int main(){
+  cin >> n >> m;
+  
+  for(int i = 0; i < m; i++){
+    int a, b;
+    
+    cin >> a >> b;
+    
+    Vertex[a].push_back(b);
+    Vertex[b].push_back(a);
+    
+  }
+  cin >> start >> end2;
+  
+  for(int i = 0; i < n; i++)
+  Table[i] = 4389839;
+  
+  Table[start] = 0;
+  
+  for(int i = 0; i < n; i++){
+    int minValue = 3493049;
+    int minIndex = -1;
+    
+    for(int p = 0; p < n; p++){
+      if(!Check[p] && minValue > Table[p]){
+        minValue = Table[p];
+        minIndex = p;
+        //cout << "minValue : " << minValue << " " "minIndex : " << minIndex << endl;
+      }
+    }
+    
+    Check[minIndex] = true;
+    
+    for(int r = 0; r < Vertex[minIndex].size(); r++){
+      int Node = Vertex[minIndex][r];
+      if(Table[Node] > Table[minIndex] + cost){
+        Table[Node] = Table[minIndex] + cost;
+        //cout << "Node : " << Node << " " << "Table[" << Node << "] :" << Table[Node] << endl;
+      }
+      
+    }
+  }
+  // for(int i = 0; i < n; i++){
+  //   cout << Table[i] << " ";
+  // }
+  //cout << endl;
+  cout << Table[end2];
+  return 0;
+}
