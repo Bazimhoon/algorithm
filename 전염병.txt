@@ -1,0 +1,41 @@
+#include <iostream>
+using namespace std;
+#include<queue>
+queue<int> qu;
+const int MAX = 100010;
+int n, k;
+int cnt = 0;
+bool plague_village[MAX];
+void plague(int start_village){
+  qu.push(start_village);
+  plague_village[start_village] = true;
+  
+  while(!qu.empty()){
+    int num = qu.front();
+    int num_two = num * 2;
+    int num_three = num / 3;
+    qu.pop();
+    cnt++;
+    
+    if(num_two <= n && !plague_village[num_two]){
+      plague_village[num_two] = true;
+      qu.push(num_two);
+    }
+    if(num_three >= 1 && !plague_village[num_three]){
+      plague_village[num_three] = true;
+      qu.push(num_three);
+    }
+    
+    
+    
+  }
+}
+int main() {
+    
+    
+    cin >> n >> k;
+    plague(k);
+    cout << n-cnt;
+
+  return 0;
+}
