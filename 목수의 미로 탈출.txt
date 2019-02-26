@@ -1,0 +1,130 @@
+#include<iostream>
+using namespace std;
+#include<utility>
+#include<queue>
+#include<cstring>
+
+const int MAX = 1100;
+int n, m;
+int cnt = 0;
+int cnt1 = 0;
+typedef pair<int, int> pair_t;
+bool color[MAX][MAX];
+int arr[MAX][MAX];
+int cnt_arr[3][MAX][MAX];
+int dx[4] = {1,0,-1,0};
+int dy[4] = {0,1,0,-1};
+queue<pair_t> qu;
+int min_result = 100000000; //21¾ï
+void bfs(int start_row, int start_col){
+  int nx, ny;
+  
+  qu.push(make_pair(start_row, start_col));
+  cnt_arr[0][start_row][start_col] = cnt;
+  color[start_row][start_col] = true;
+  
+  while(!qu.empty()){
+    pair_t num = qu.front();
+    int num_row = num.first;
+    int num_col = num.second;
+    qu.pop();
+    cnt = cnt_arr[0][num_row][num_col] + 1;
+    
+    for(int i=0;i<4;i++){
+      nx = num_row + dx[i];
+      ny = num_col + dy[i];
+      
+      if(nx <= 0 || ny <= 0 || nx > n || ny > m || color[nx][ny]) continue;
+      
+      if(arr[nx][ny] == 1){
+        cnt_arr[0][nx][ny] = cnt;
+        color[nx][ny] = true;
+      }
+      else{
+        qu.push(make_pair(nx, ny));
+        cnt_arr[0][nx][ny] = cnt;
+        color[nx][ny] = true;
+      }
+    }
+
+  }
+  memset(color, false, sizeof(color));
+  int a, b;
+  qu.push(make_pair(1,m));
+  cnt_arr[1][1][m] = cnt1;
+  color[1][m] = true;
+  
+  while(!qu.empty()){
+    pair_t num = qu.front();
+    int num_first = num.first;
+    int num_second = num.second;
+    qu.pop();
+    cnt1 = cnt_arr[1][num_first][num_second] + 1;
+    
+    for(int i = 0; i< 4; i++){
+      a = num_first + dx[i];
+      b = num_second + dy[i];
+      
+      if(a <= 0 || b <= 0 || a > n || b > m || color[a][b]) continue;
+      
+      if(arr[a][b] == 1){
+          cnt_arr[1][a][b] = cnt1;
+          color[a][b] = true;
+      }
+      else{
+        qu.push(make_pair(a,b));
+        cnt_arr[1][a][b] = cnt1;
+        color[a][b] = true;
+      }
+    }
+  }
+  
+  for(int i = 1; i <= n; i++){
+    for(int p = 1; p <=m; p++){
+      if(cnt_arr[0][i][p] == 0 || cnt_arr[1][i][p] == 0) cnt_arr[2][i][p] = 100000000;
+      else cnt_arr[2][i][p] = cnt_arr[0][i][p] + cnt_arr[1][i][p];
+      
+      if(cnt_arr[2][i][p] < min_result)
+      min_result = cnt_arr[2][i][p];
+    }
+  }
+
+}
+int main(){
+  
+  memset(arr,-1,sizeof(arr));
+  
+  cin >> n >> m;
+
+  for(int i = 1; i<=n; i++){
+    for(int p = 1; p<= m; p++){
+      cin >> arr[i][p];
+    }
+  }
+  bfs(n, 1);
+  cout << min_result << endl;
+  
+  for(int i = 1; i <= n; i++){
+    for(int p = 1; p <= m; p++){
+      cout << cnt_arr[0][i][p] << " ";
+    }
+    cout << endl;
+  }
+  cout << endl;
+  for(int i = 1; i <= n; i++){
+    for(int p = 1; p <= m; p++){
+      cout << cnt_arr[1][i][p] << " ";
+    }
+    cout << endl;
+  }
+  cout << endl;
+  for(int i = 1; i <= n; i++){
+    for(int p = 1; p <= m; p++){
+      cout << cnt_arr[2][i][p] << " ";
+    }
+    cout << endl;
+  }
+  
+  return 0;
+  
+}
