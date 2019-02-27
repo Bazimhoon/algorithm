@@ -1,0 +1,44 @@
+#include <iostream>
+using namespace std;
+#include<vector>
+
+const int MAX = 1100;
+int v, e;
+int group = 0;
+vector<int> Vertex[MAX];
+bool Color[MAX];
+void dfs(int start){
+  Color[start] = true;
+  
+  for(int i = 0; i < Vertex[start].size(); i++){
+    int num = Vertex[start][i];
+    
+    if(!Color[num])
+    dfs(num);
+  }
+}
+int main() {
+
+  cin >> v >> e;
+  
+  for(int i = 0; i<e; i++){
+    int a,b;
+    
+    cin >> a >> b;
+    
+    Vertex[a].push_back(b);
+    Vertex[b].push_back(a);
+    
+  }
+  for(int i = 1; i <= v; i++){
+    if(!Color[i]){
+      dfs(i);
+      group++;
+    }
+    
+  }
+  cout << group;
+  
+
+  return 0;
+}
