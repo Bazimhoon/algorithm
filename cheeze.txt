@@ -1,0 +1,94 @@
+#include <iostream>
+using namespace std;
+#include<queue>
+#include<utility>
+#include<cstring>
+const int MAX = 100;
+int n, m;
+int arr[MAX][MAX];
+int timer = 0;
+int cnt = 0;
+int cheeze = 0;
+typedef pair<int, int> pair_t;
+bool Color[MAX][MAX];
+queue<pair_t> qu;
+int dx[4] = { -1,0,1,0 };
+int dy[4] = { 0,1,0,-1 };
+
+bool have_Cheeze() {
+
+	for (int i = 0; i < n; i++) {
+		for (int p = 0; p < m; p++) {
+			if (arr[i][p] == 1)
+				return false;
+		}
+	}
+	return true;
+}
+void bfs(int sr, int sc) {
+	qu.push(make_pair(sr, sc));
+	
+
+	while (!qu.empty()) {
+		pair_t num = qu.front();
+		int a = num.first;
+		int b = num.second;
+		qu.pop();
+		
+
+		for (int i = 0; i < 4; i++) {
+			int dx_num = a + dx[i];
+			int dy_num = b + dy[i];
+
+			if (dx_num < 0 || dy_num < 0 || dx_num >= n || dy_num >= m
+				|| Color[dx_num][dy_num])
+				continue;
+
+			if (arr[dx_num][dy_num] == 0) {
+				qu.push(make_pair(dx_num, dy_num));
+				Color[dx_num][dy_num] = true;
+			}
+			if (arr[dx_num][dy_num] == 1) {
+				arr[dx_num][dy_num] = 0;
+				Color[dx_num][dy_num] = true;
+				cnt++;
+			}
+		}
+	}
+
+
+
+}
+int main() {
+
+	cin >> n >> m;
+	for (int i = 0; i < n; i++) {
+		for (int p = 0; p < m; p++) {
+			cin >> arr[i][p];
+		}
+	}
+	while (1) {
+    bool flag = have_Cheeze();
+    if (flag)
+			break;
+			
+		bfs(n - 1, 0);
+		cheeze = cnt;
+		cnt = 0;
+		timer++;
+
+		for (int i = 0; i < n; i++) {
+			for (int p = 0; p < m; p++) {
+				 Color[i][p] = 0;
+			}
+		}
+		
+	}
+
+
+	cout << timer << endl;
+	cout << cheeze;
+
+
+	return 0;
+}
