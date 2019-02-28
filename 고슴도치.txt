@@ -1,0 +1,130 @@
+#include <iostream>
+using namespace std;
+#include<queue>
+typedef pair<int, int> pair_t;
+queue<pair_t> qu_water;
+queue<pair_t> qu_doc;
+const int MAX = 70;
+char st[MAX][MAX];
+int n, m;
+pair_t water[MAX][1];
+int stair = 0;
+pair_t dochi;
+pair_t biber;
+pair_t rock;
+int arr[MAX][MAX];
+int cnt = 0;
+int dx[4] = { -1,0,1,0 };
+int dy[4] = { 0,1,0,-1 };
+int result;
+bool flag = false;
+int cnt_water = 0;
+bool Color[MAX][MAX];
+void bfs(pair_t doc, pair_t wat[][1], pair_t bib) {
+
+	qu_doc.push(make_pair(doc.first, doc.second));
+	arr[doc.first][doc.second] = cnt;
+
+	for (int i = 0; i < stair; i++) {
+		qu_water.push(make_pair(wat[i][1].first, wat[i][1].second));
+	}
+	
+	while (!qu_doc.empty()) {
+		
+		int doc_size = qu_doc.size();
+		
+  for(int x = 0; x < doc_size; x++){
+    pair_t doc = qu_doc.front();
+    qu_doc.pop();
+    Color[doc.first][doc.second] = true;
+    cnt = arr[doc.first][doc.second] + 1;
+    
+    if(arr[doc.first][doc.second] == -1)
+    continue;
+    
+    for (int i = 0; i < 4; i++) {
+			int dx_num = doc.first + dx[i];
+			int dy_num = doc.second + dy[i];
+
+			if (dx_num == bib.first && dy_num == bib.second) {
+				arr[dx_num][dy_num] = cnt;
+				result = arr[dx_num][dy_num];
+				flag = true;
+				return;
+			}
+
+			if (dx_num < 0 || dy_num < 0 || dx_num >= n || dy_num >= m
+				|| arr[dx_num][dy_num] == -1 || arr[dx_num][dy_num] == -2 ||
+				Color[dx_num][dy_num])
+				continue;
+
+			arr[dx_num][dy_num] = cnt;
+			Color[dx_num][dy_num] = true;
+			qu_doc.push(make_pair(dx_num, dy_num));
+		}
+  }
+		
+		int size = qu_water.size();
+		for (int i = 0; i < size; i++) {
+			pair_t wat = qu_water.front();
+			qu_water.pop();
+
+			for (int p = 0; p < 4; p++) {
+				int dx_num = wat.first + dx[p];
+				int dy_num = wat.second + dy[p];
+
+				if (dx_num < 0 || dy_num < 0 || dx_num >= n || dy_num >= m
+					|| arr[dx_num][dy_num] == -1 || arr[dx_num][dy_num] == -2 || arr[dx_num][dy_num] == -3)
+					continue;
+
+				arr[dx_num][dy_num] = -1;
+				qu_water.push(make_pair(dx_num, dy_num));
+			}
+		}
+	}
+}
+int main() {
+
+	cin >> n >> m;
+	for (int i = 0; i < n; i++) {
+		for (int p = 0; p < m; p++) {
+			cin >> st[i][p];
+
+			if (st[i][p] == 'S')
+				dochi = make_pair(i, p);
+
+			if (st[i][p] == '*') {
+				water[stair++][1] = make_pair(i, p);
+				arr[i][p] = -1;
+			}
+
+
+			if (st[i][p] == 'D') {
+				biber = make_pair(i, p);
+				arr[i][p] = -3;
+			}
+
+
+			if (st[i][p] == 'X') {
+				rock = make_pair(i, p);
+				arr[i][p] = -2;
+			}
+
+		}
+	}
+
+
+	bfs(dochi, water, biber);
+// 	for (int i = 0; i < n; i++) {
+// 		for (int p = 0; p < m; p++) {
+// 			cout << arr[i][p] << " ";
+// 		}
+// 		cout << endl;
+// 	}
+
+	if (flag == true)
+		cout << result;
+  else
+  cout << "KAKTUS";
+	return 0;
+}
