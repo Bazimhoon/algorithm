@@ -1,0 +1,80 @@
+#include <iostream>
+using namespace std;
+#include<queue>
+
+typedef pair<int, int> pair_t;
+queue<pair_t> qu;
+const int MAX = 110;
+int n;
+int arr[MAX][MAX];
+int arr_flood[MAX][MAX];
+bool Color[MAX][MAX];
+int cnt = 1;
+int num = 0;
+int dx[MAX] = {-1,0,1,0};
+int dy[MAX] = {0,1,0,-1};
+int max1 = 0;
+void bfs(int sr, int sc){
+  Color[sr][sc] = true;
+  qu.push(make_pair(sr,sc));
+  
+  while(!qu.empty()){
+    pair_t num = qu.front();
+    qu.pop();
+    
+    for(int i = 0; i< 4; i++){
+      int dx_num = dx[i] + num.first;
+      int dy_num = dy[i] + num.second;
+      
+      if(Color[dx_num][dy_num] || dx_num < 0 || dy_num < 0 || dx_num >= n 
+          || dy_num >= n || arr_flood[dx_num][dy_num] == -1)
+          continue;
+          
+          qu.push(make_pair(dx_num, dy_num));
+          Color[dx_num][dy_num] = true;
+    }
+    
+  }
+}
+int main() {
+
+  cin >> n;
+  
+  for(int i = 0; i < n; i++){
+    for(int p = 0; p < n; p++){
+      cin >> arr[i][p];
+    }
+  }
+  while(cnt <= 100){
+    for(int i = 0; i< n; i++){
+      for(int p = 0; p< n; p++){
+      if(arr[i][p] <= cnt){
+        arr_flood[i][p] = -1;
+        Color[i][p] = true;
+      }
+      
+    }
+  }
+  for(int i = 0; i < n; i++){
+    for(int p = 0; p < n; p++){
+      if(!Color[i][p]){
+        bfs(i,p);
+        num++;
+      }
+    }
+  }
+  if(max1 < num){
+    max1 = num;
+  }
+  num = 0;
+  cnt++;
+  for(int i = 0; i < n; i++){
+    for(int p = 0; p< n; p++){
+      Color[i][p] = 0;
+    }
+  }
+}
+cout << max1;
+  
+  return 0;
+}
