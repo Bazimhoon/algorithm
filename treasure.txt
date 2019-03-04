@@ -1,0 +1,94 @@
+#include <iostream>
+using namespace std;
+#include<queue>
+#include<string>
+const int MAX = 60;
+string treasure[MAX];
+int n, m;
+bool Color[MAX][MAX];
+int color_arr[MAX][MAX];
+int max1 = -243453;
+int cnt = 0;
+int dx[4] = { -1,0,1,0 };
+int dy[4] = { 0,1,0,-1 };
+
+struct node {
+	int x, y, z;
+};
+node make_node(int a, int b, int c) {
+	node ret;
+	ret.x = a;
+	ret.y = b;
+	ret.z = c;
+
+	return ret;
+}
+void bfs(int sr, int sc) {
+	queue<node> qu;
+	Color[sr][sc] = true;
+	qu.push(make_node(sr, sc, cnt));
+	//cout << sr << " " << sc << " " << cnt << endl;
+	//cout << cnt << endl;
+	
+	while(!qu.empty()) {
+		node num = qu.front();
+		qu.pop();
+
+		cnt = num.z + 1;
+
+		for (int i = 0; i < 4; i++) {
+			int dx_num = num.x + dx[i];
+			int dy_num = num.y + dy[i];
+
+			if (Color[dx_num][dy_num] || color_arr[dx_num][dy_num] == -1 ||
+			   dx_num < 0 || dy_num < 0 || dx_num >= n || dy_num >= m)
+				continue;
+
+			qu.push(make_node(dx_num, dy_num, cnt));
+			//cout << dx_num << " " << dy_num << " " << cnt << endl;
+			// cout << cnt << endl;
+			Color[dx_num][dy_num] = true;
+
+		}
+	}
+	if (max1 < cnt - 1) {
+		max1 = cnt - 1;
+		//cout << max1 << endl;
+	}
+	cnt = 0;
+	for (int x = 0; x < n; x++) {
+		for (int y = 0; y < m; y++) {
+			Color[x][y] = 0;
+		}
+	}
+}
+int main() {
+
+	cin >> n >> m;
+
+	for (int i = 0; i < n; i++) {
+		cin >> treasure[i];
+	}
+
+	for (int i = 0; i < n; i++) {
+		for (int p = 0; p < m; p++) {
+		  if(treasure[i][p] == 'L'){
+		    color_arr[i][p] = 0;
+		  }
+		  else if(treasure[i][p] == 'W'){
+		    color_arr[i][p] = -1;
+		  }
+		}
+	}
+	for(int i = 0; i < n; i++){
+	  for(int p = 0; p < m; p++){
+	    if(color_arr[i][p] == 0)
+	    bfs(i,p);
+	  }
+	}
+	
+	cout << max1;
+
+
+	return 0;
+}
