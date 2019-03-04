@@ -1,0 +1,106 @@
+#include<iostream>
+using namespace std;
+#include<queue>
+#include<algorithm>
+
+const int MAX = 110;
+int n, m, k;
+int arr[MAX][MAX];
+int area[MAX][MAX];
+int dx[MAX] = { -1,0,1,0 };
+int dy[MAX] = { 0,1,0,-1 };
+typedef pair<int, int> pair_t;
+int cnt = 0;
+bool Color[MAX][MAX];
+bool Color1[MAX][MAX];
+int result[MAX], idx = 0;
+
+queue<pair_t> qu;
+
+void bfs(int xs, int ys, int xe, int ye) {
+	qu.push(make_pair(xs,ys));
+	Color1[xs][ys] = true;
+	
+	while (!qu.empty()) {
+		pair_t num = qu.front();
+		qu.pop();
+		area[num.first][num.second] = -1;
+		
+
+		for (int i = 0; i < 4; i++) {
+			int ran_x1 = dx[i] + num.first;
+			int ran_y1 = dy[i] + num.second;
+
+			if (Color1[ran_x1][ran_y1] || ran_x1 < xs || ran_x1 >= xe || ran_y1 < ys ||
+				ran_y1 >= ye)
+				continue;
+
+			qu.push(make_pair(ran_x1, ran_y1));
+			Color1[ran_x1][ran_y1] = 1;
+		}
+	}
+}
+int bfs(int a, int b) {
+	Color[a][b] = true;
+	qu.push(make_pair(a, b));
+	int pp = 0;
+	while (!qu.empty()) {
+		pair_t num = qu.front();
+		qu.pop();
+		pp++;
+		for (int i = 0; i < 4; i++) {
+			int dx_num = dx[i] + num.first;
+			int dy_num = dy[i] + num.second;
+
+			if (Color[dx_num][dy_num] || area[dx_num][dy_num] == -1 || dx_num < 0 || dy_num < 0 ||
+				dx_num >= m || dy_num >= n)
+				continue;
+
+			Color[dx_num][dy_num] = true;
+			qu.push(make_pair(dx_num, dy_num));
+		}
+	}
+	return pp;
+
+}
+int main() {
+	cin >> n >> m >> k;
+
+	for (int i = 0; i < k; i++) {
+		for (int p = 0; p < 4; p++) {
+
+			cin >> arr[i][p];
+		}
+		if(arr[i][0] == arr[i][2] || arr[i][1] == arr[i][3])
+		continue;
+		
+		bfs(arr[i][0], arr[i][1], arr[i][2], arr[i][3]);
+		
+		for (int x = 0; x < m; x++) {
+			for (int y = 0; y < n; y++) {
+				Color1[x][y] = false;
+			}
+		}
+	}
+
+	for (int i = 0; i < m; i++) {
+		for (int p = 0; p < n; p++) {
+			if (!Color[i][p] && area[i][p] != -1) {
+				result[idx++] = bfs(i, p);
+				cnt++;
+			}
+		}
+	}
+// 	for(int i = 0; i < m ; i++){
+// 	  for(int p = 0; p< n; p++){
+// 	    cout << area[i][p] << " ";
+// 	  }
+// 	  cout << endl;
+// 	}
+	cout << cnt << endl;
+	sort(result, result+cnt);
+	for (int i = 0; i < cnt; i++) {
+		cout << result[i] << " ";
+	}
+	return 0;
+}
