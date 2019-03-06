@@ -1,0 +1,88 @@
+#include<iostream>
+using namespace std;
+#include<vector>
+#include<queue>
+#include<cstring>
+const int MAX = 100010;
+int n;
+int arr[MAX];
+int group_arr[MAX];
+queue<int> qu;
+vector<int> Vertex[MAX];
+bool Color[MAX];
+int cnt = 0;
+int copy_idx[MAX], idx = 0;
+int result = 0;
+bool flag = false;
+int main(){
+  
+  cin >> n;
+  
+  for(int i = 1; i <= n; i++){
+    int a;
+    cin >> a;
+    Vertex[i].push_back(a);
+  }
+  
+  for(int i = 1; i <= n; i++){
+    
+    if(group_arr[i] == -1)
+      continue;
+    
+    if(i == Vertex[i][0]){
+      group_arr[i] = -1;
+      continue;
+    }
+    
+    qu.push(i);
+    
+    while(!qu.empty()){
+      int num = qu.front();
+      qu.pop();
+      int ver_num = Vertex[num][0];
+      
+      if(ver_num <= i && group_arr[ver_num] != -1 && !Color[ver_num]){
+        qu.push(ver_num);
+        Color[ver_num] = 1;
+        copy_idx[idx++] = ver_num;
+      }
+    }
+    
+    if(Color[i]){
+      if(idx == n){
+        flag = true;
+        break;
+      }
+      while(1){
+         if(idx == 0)
+         break;
+         
+         group_arr[copy_idx[--idx]] = -1;
+         Color[copy_idx[idx]] = 0;
+         copy_idx[idx] = 0;
+      }
+    }
+    else{
+      for(int x = 0; x < idx; x++){
+        Color[copy_idx[x]] = 0;
+        copy_idx[x] = 0;
+      }
+      idx = 0;
+    }
+    
+  }
+  if(flag == false){
+    for(int x = 1; x <= n; x++){
+    if(group_arr[x] == -1)
+    cnt++;
+  }
+  cout << n - cnt;
+  }
+  else
+  cout << 0;
+  
+  
+  
+  return 0;
+  
+}
