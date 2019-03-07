@@ -1,0 +1,74 @@
+#include<iostream>
+using namespace std;
+#include<vector>
+#include<cstring>
+
+const int MAX = 100;
+int n, m;
+vector<int> vi_big[MAX];
+vector<int> vi_small[MAX];
+bool Color[MAX];
+int bead_cnt = 0;
+int cnt = 0;
+
+int dfs_big(int start){
+  Color[start] = 1;
+  
+  for(int i = 0; i < vi_big[start].size(); i++){
+    int num = vi_big[start][i];
+    if(!Color[num]){
+      cnt++;
+      dfs_big(num);
+    }
+  }
+
+  memset(Color, 0, sizeof(Color));
+  return cnt;
+}
+
+int dfs_small(int start){
+  Color[start] = 1;
+  
+  for(int i = 0; i < vi_small[start].size(); i++){
+    int num = vi_small[start][i];
+    if(!Color[num]){
+      cnt++;
+      dfs_small(num);
+    }
+  }
+
+  memset(Color, 0, sizeof(Color));
+  return cnt;
+}
+int main(){
+  cin >> n >> m;
+  
+  for(int i = 0; i < m; i++){
+    int a, b;
+    cin >> a >> b;
+    
+    vi_big[b].push_back(a);
+    vi_small[a].push_back(b);
+  }
+  
+  for(int i = 1; i <= n; i++){
+    int p = dfs_big(i);
+    
+    if(p >= (n+1)/2){
+      bead_cnt++;
+      cnt = 0;
+      continue;
+    }
+    cnt = 0;
+    
+    int q = dfs_small(i);
+    
+    if(q >= (n+1)/2){
+      bead_cnt++;
+      
+    }
+    cnt = 0;
+  }
+  cout << bead_cnt;
+  return 0;
+}
