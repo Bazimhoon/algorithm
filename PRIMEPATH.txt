@@ -1,0 +1,135 @@
+#include<iostream>
+using namespace std;
+#include<queue>
+
+const int MAX = 10000;
+typedef pair<int, int> pair_t;
+int prime_arr[MAX];
+int arr_cpy[MAX];
+int arr[MAX];
+int prime_p = 0;
+int n;
+int cnt = 0;
+queue<pair_t> qu;
+
+bool check_one(int fix, int cmp){
+  
+  int arr_f[4], arr_idx = 0;
+  int arr_cmp[4], arr_cmp_idx = 0;
+  int div = 1000;
+  int mok = 0, mok_cmp = 0;
+  int nam = 0, nam_cmp = 0;
+  while(1){
+    mok = fix / div;
+    mok_cmp = cmp / div;
+    
+    arr_f[arr_idx++] = mok;
+    arr_cmp[arr_cmp_idx++] = mok_cmp;
+    
+    nam = fix - (mok * div);
+    nam_cmp = cmp - (mok_cmp * div);
+    fix = nam;
+    cmp = nam_cmp;
+    
+    div /= 10;
+    
+    if(div == 0)
+    break;
+  }
+  
+  int v = 0;
+  for(int p = 0; p < 4; p++){
+    if(arr_f[p] != arr_cmp[p])
+    v++;
+    
+    if(v > 1)
+    return false;
+  }
+  return true;
+}
+int bfs(int start, int target){
+  qu.push(make_pair(start, cnt));
+  prime_arr[start] = -1;
+  
+  while(!qu.empty()){
+    pair_t num = qu.front();
+    qu.pop();
+    cnt = num.second + 1;
+    
+    if(num.first == target)
+    return num.second;
+    
+    for(int i = 0; i < prime_p; i++){
+      if(prime_arr[i] == -1)
+      continue;
+     
+      if(check_one(num.first, prime_arr[i])){
+        qu.push(make_pair(prime_arr[i], cnt));
+        prime_arr[i] = -1;
+      }
+    }
+  }
+  return -1;
+}
+int main(){
+ 
+  int num = 0;
+  int idx = 0;
+  while(num < MAX){
+    arr[idx++] = num++;
+  }
+  
+  for(int i = 2; i*i < MAX; i++){
+    
+    if(arr[i] == -1)
+    continue;
+    
+    int p = arr[i];
+    
+    while(p < MAX){
+      if(arr[p] == -1){
+        p++;
+        continue;
+      }
+      
+      if(arr[p] % i == 0)
+      arr[p] = -1;
+      
+      p++;
+    }
+  }
+  for(int p = 1000; p < MAX; p++){
+    if(arr[p] != -1)
+    arr_cpy[prime_p++] = arr[p];
+  }
+  
+  for(int x = 0; x < prime_p; x++){
+    prime_arr[x] = arr_cpy[x];
+  }
+  
+  cin >> n;
+  for(int i = 0; i < n; i++){
+    int a, b;
+    cin >> a >> b;
+    
+    int l = bfs(a,b);
+    
+    if(l == -1)
+    cout << "Impossible" << endl;
+    
+    else{
+      cout << l << endl;
+    }
+    cnt = 0;
+    while(!qu.empty()){
+      qu.pop();
+    }
+    
+    for(int x = 0; x < prime_p; x++){
+    prime_arr[x] = arr_cpy[x];
+    }
+  }
+  
+  return 0;
+  
+}
