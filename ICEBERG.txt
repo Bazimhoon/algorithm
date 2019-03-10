@@ -1,0 +1,98 @@
+#include <iostream>
+using namespace std;
+#include<queue>
+
+const int MAX = 350;
+typedef pair<int,int> pair_t;
+queue<pair_t> qu;
+int n, m;
+int iceberg[MAX][MAX];
+int ice_cnt = 0;
+int iceberg_change[MAX][MAX];
+bool Check[MAX][MAX];
+int dx[4] = {-1,0,1,0};
+int dy[4] = {0,1,0,-1};
+int year = 0;
+
+void bfs(int sr, int sc){
+  
+  Check[sr][sc] = 1;
+  qu.push(make_pair(sr,sc));
+  
+  while(!qu.empty()){
+    pair_t num = qu.front();
+    qu.pop();
+    int cnt = 0;
+    for(int i = 0; i < 4; i++){
+      int dx_num = dx[i] + num.first;
+      int dy_num = dy[i] + num.second;
+      
+      if(Check[dx_num][dy_num] || dx_num < 0 || dy_num <0 
+      || dx_num >= n || dy_num >= m)
+      continue;
+      
+      if(iceberg[dx_num][dy_num] == 0)
+      cnt++;
+      
+      else{
+        qu.push(make_pair(dx_num, dy_num));
+        Check[dx_num][dy_num] = 1;
+        
+      }
+      
+    }
+    iceberg_change[num.first][num.second] = 
+                   iceberg[num.first][num.second] - cnt;
+  }
+}
+int main() {
+
+  cin >> n >> m;
+  bool flag = false;
+  
+  for(int i = 0; i < n ; i++){
+    for(int p = 0; p < m; p++){
+      cin >> iceberg[i][p];
+    }
+  }
+  int pp = 1;
+  
+  while(pp != 0){
+    for(int i = 1; i < n; i++){
+     for(int p = 1; p < m; p++){
+       if(!Check[i][p] && iceberg[i][p] > 0){
+         bfs(i,p);
+         ice_cnt++;
+       }
+     }
+    }
+     
+     if(ice_cnt >= 2){
+       flag = true;
+       break;
+     }
+     year++;
+     ice_cnt = 0;
+     pp = 0;
+     for(int i = 1; i < n; i++){
+       for(int p = 1; p < m; p++){
+         if(iceberg_change[i][p] < 0)
+         iceberg[i][p] = 0;
+         else{
+           iceberg[i][p] = iceberg_change[i][p];
+         }
+         
+         Check[i][p] = 0;
+         
+         if(iceberg[i][p] != 0)
+         pp++;
+       }
+     }
+  }
+   
+   if(flag == true)
+   cout << year;
+   else 
+   cout << 0;
+  return 0;
+}
