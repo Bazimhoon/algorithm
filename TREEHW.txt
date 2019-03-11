@@ -1,0 +1,78 @@
+#include <iostream>
+using namespace std;
+#include<queue>
+
+const int MAX = 1100;
+int treehw[MAX][MAX], idx = 0;
+int n;
+bool Check[MAX];
+queue<int> qu;
+int depth = 0;
+int max_length = 0;
+int col_num[MAX];
+int width_max = 0;
+int width_idx = 0;
+struct Tree{
+  int left;
+  int right;
+};
+
+Tree tree[MAX];
+
+void inorder(int root){
+  
+  if(tree[root].left == -1 && tree[root].right == -1){
+    if(max_length < depth){
+      max_length = depth;
+    }
+    treehw[depth][idx++] = root;
+    return;
+  }
+  else{
+    if(tree[root].left != -1){
+      depth++;
+      inorder(tree[root].left);
+      depth--;
+    }
+    treehw[depth][idx++] = root;
+    
+    if(tree[root].right != -1){
+      depth++;
+      inorder(tree[root].right);
+      depth--;
+    }
+  }
+}
+int main() {
+
+  cin >> n;
+  for(int i = 0; i < n; i++){
+    int a, b, c;
+    
+    cin >> a >> b >> c;
+    
+    tree[a].left = b;
+    tree[a].right = c;
+    
+  }
+  inorder(1);
+  for(int i = 0; i < max_length+1; i++){
+    int cnt = 0;
+    for(int p = 0; p < idx; p++){
+      if(treehw[i][p] != 0){
+        col_num[cnt++] = p;
+      }
+    }
+    if(col_num[cnt-1] - col_num[0] + 1 > width_max){
+      width_max = col_num[cnt-1] - col_num[0] + 1;
+      width_idx = i;
+    }
+    for(int x = 0; x < idx; x++)
+    col_num[x] = 0;
+  }
+  
+  cout << width_idx+1 << " " << width_max << endl;
+  
+
+  return 0;
+}
