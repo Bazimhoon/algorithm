@@ -1,0 +1,23 @@
+#include <iostream>
+using namespace std;
+const int MAX = 1000;
+int main() {
+
+  int n;
+  cin >> n;
+  int arr[MAX], idx = 0;
+  
+  int mok, nam;
+  int div = n;
+  while(div > 0){
+    mok = div / 2;
+    nam = div - mok * 2;
+    arr[idx++] = nam;
+    div = mok;
+  }
+  
+  for(int i = idx-1; i >= 0; i--){
+    cout << arr[i];
+  }
+  return 0;
+}

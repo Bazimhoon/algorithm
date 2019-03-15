@@ -1,0 +1,56 @@
+#include <iostream>
+using namespace std;
+const int MAX = 1100;
+
+int game(int a, int b, int c){
+  int maxx = -4343;
+  int cnt = 0;
+  
+  
+  if(a == b && a == c){
+    return 10000+(a * 1000);
+  }
+  
+  
+  else if(a == b && a != c){
+
+    return 1000+a*100;
+    
+  }
+  else if(a != b && a == c){
+    
+    return 1000+a*100;
+  }
+  else if(a != b && b == c){
+    
+    return 1000+b*100;
+  }
+  else{
+    if(a > b && a > c)
+    maxx = a;
+    else if(b > a && b > c)
+    maxx = b;
+    else
+    maxx = c;
+    
+    return maxx*100;
+  }
+}
+int main() {
+
+  int n;
+  int maxxx = -4343;
+  cin >> n;
+  int arr[MAX][3];
+  for(int i = 0; i < n; i++){
+    for(int p = 0; p < 3; p++){
+      cin >> arr[i][p];
+    }
+    int max_cnt = game(arr[i][0], arr[i][1], arr[i][2]);
+    if(maxxx < max_cnt)
+    maxxx = max_cnt;
+  }
+  cout << maxxx;
+
+  return 0;
+}

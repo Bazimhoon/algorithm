@@ -1,0 +1,30 @@
+#include <iostream>
+using namespace std;
+
+const int MAX = 14;
+int main() {
+  long int maxx = 3434454;
+  int max_idx = 0;
+  
+  long int arr[MAX];
+  for(int i = 1; i <= 9; i++){
+    cin >> arr[i];
+    if(maxx > arr[i]){
+      max_idx = i;
+      maxx = arr[i];
+    }
+  }
+  arr[max_idx] = 4353455;
+  maxx = 23323;
+  for(int i = 1; i <= 9; i++){
+    if(maxx > arr[i]){
+      max_idx = i;
+      maxx = arr[i];
+    }
+  }
+  cout << maxx << endl;
+  cout << max_idx;
+  
+
+  return 0;
+}
