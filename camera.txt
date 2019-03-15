@@ -1,0 +1,91 @@
+#include<iostream>
+using namespace std;
+#include<vector>
+#include<queue>
+
+typedef pair<int, int> pair_t;
+const int MAX = 1100;
+vector<int> vi[MAX];
+bool Color[MAX];
+int vertex_num[MAX];
+queue<int> leaf_node;
+
+
+void bfs(int leaf) {
+  int cnt = 1;
+  queue<pair_t> qu;
+	Color[leaf] = 1;
+	qu.push(make_pair(leaf, cnt));
+
+	while (!qu.empty()) {
+		pair_t num = qu.front();
+		qu.pop();
+
+		if (num.second == 4) {
+		  vertex_num[num.first] -= 1;
+		  
+		  if(vertex_num[num.first] == 1)
+			leaf_node.push(num.first);
+			continue;
+		}
+
+		cnt = num.second + 1;
+
+		for (int i = 0; i < vi[num.first].size(); i++) {
+			int number = vi[num.first][i];
+
+			if (!Color[number]) {
+				qu.push(make_pair(number, cnt));
+				if(cnt != 4)
+				Color[number] = 1;
+			}
+		}
+	}
+	
+}
+
+int main() {
+  
+  int d, p;
+	cin >> d >> p;
+	
+	for (int i = 0; i < p; i++) {
+		int a, b;
+		cin >> a >> b;
+
+		vi[a].push_back(b);
+		vi[b].push_back(a);
+
+	}
+	for (int i = 0; i < d; i++) {
+		vertex_num[i] = vi[i].size();
+	}
+	
+
+	for (int i = 0; i < d; i++) {
+		if (vertex_num[i] == 1) 
+		leaf_node.push(i);
+	}
+  
+  int camera_cnt = 0;
+	while (!leaf_node.empty()) {
+		int pp = leaf_node.front();
+		leaf_node.pop();
+
+		if (!Color[pp]){
+		  camera_cnt++;
+		  bfs(pp);
+		}
+
+	}
+
+	for (int i = 0; i < d; i++) {
+		if (!Color[i])
+			camera_cnt++;
+	}
+	
+
+	cout << camera_cnt;
+
+	return 0;
+}
