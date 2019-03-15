@@ -1,0 +1,67 @@
+#include <iostream>
+using namespace std;
+#include<queue>
+#include<vector>
+#include<algorithm>
+const int MAX = 110;
+
+bool Check[MAX];
+queue<int> qu;
+vector<int> Vertex[MAX];
+int n;
+int max_cnt = 0;
+int cnt = 0;
+bool flag = false;
+int arr[MAX];
+int arr_cpy[MAX], idx = 0;
+
+void dfs(int fix, int start){
+  
+  if(Check[fix] == 1){
+    max_cnt += cnt;
+    flag = true;
+    return;
+  }
+  for(int i = 0; i < Vertex[start].size(); i++){
+    int num = Vertex[start][i];
+    
+    if(!Check[num]){
+      Check[num] = 1;
+      cnt++;
+      dfs(fix, num);
+    }
+    if(flag == false){
+      Check[start] = 0;
+    }
+    if(flag == true){
+      arr_cpy[idx++] = start;
+    }
+    }
+  }
+
+
+int main() {
+
+  cin >> n;
+  for(int i = 1; i <= n; i++){
+    int a;
+    
+    cin >> a;
+    Vertex[i].push_back(a);
+  }
+  
+  for(int i = 1; i <= n; i++){
+    if(!Check[i]){
+      dfs(i, i);
+      flag = false;
+      cnt = 0;
+    }
+  }
+  cout << max_cnt << endl;
+  
+  sort(arr_cpy, arr_cpy+idx);
+  for(int i = 0; i < idx; i++){
+    cout << arr_cpy[i] << " ";
+  }
+  return 0;
+}
