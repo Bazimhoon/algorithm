@@ -1,0 +1,137 @@
+#include<iostream>
+using namespace std;
+#include<queue>
+
+const int MAX = 110;
+struct node {
+	int x, y, ewsn;
+};
+node make_node(int a, int b, int c) {
+	node ret;
+	ret.x = a;
+	ret.y = b;
+	ret.ewsn = c;
+
+	return ret;
+}
+
+queue<node> qu;
+int arr[MAX][MAX];
+bool Check[5][MAX][MAX];
+int m, n, sr, sc, look, er, ec, look1;
+int dx[4] = { 0,0,1,-1 };
+int dy[4] = { 1,-1,0,0 };
+int cnt = 0;
+
+void bfs(int row, int col, int look_w) {
+	Check[look_w][row][col] = 1;
+	qu.push(make_node(row, col, look_w));
+
+	while (!qu.empty()) {
+		int size = qu.size();
+
+		while (size--) {
+			node num = qu.front();
+			qu.pop();
+
+			if (num.x == er && num.y == ec && num.ewsn == look1) {
+				cout << cnt;
+				return;
+			}
+			
+			int pp = num.ewsn;
+			bool flag = true;
+
+			int row_cnt = num.x;
+			int col_cnt = num.y;
+			int count = 0;
+
+			while (1) {
+
+				if (count == 3)
+					break;
+
+				row_cnt = row_cnt + dx[pp - 1];
+				col_cnt = col_cnt + dy[pp - 1];
+
+					if (row_cnt == 0 || col_cnt == 0 || row_cnt > m || col_cnt > n
+						|| arr[row_cnt][col_cnt] == 1) {
+						break;
+						
+					}
+					if (!Check[pp][row_cnt][col_cnt]) {
+						qu.push(make_node(row_cnt, col_cnt, pp));
+						Check[pp][row_cnt][col_cnt] = 1;
+					}
+					count++;
+			}
+			
+			if (num.ewsn == 3) {
+				if (Check[1][num.x][num.y] == 0) {
+					qu.push(make_node(num.x, num.y, 1));
+					Check[1][num.x][num.y] = 1;
+				}
+				if (Check[2][num.x][num.y] == 0) {
+					qu.push(make_node(num.x, num.y, 2));
+					Check[2][num.x][num.y] = 1;
+				}
+				
+			}
+
+			if (num.ewsn == 1) {
+				if (Check[4][num.x][num.y] == 0) {
+					qu.push(make_node(num.x, num.y, 4));
+					Check[4][num.x][num.y] = 1;
+				}
+				if (Check[3][num.x][num.y] == 0) {
+					qu.push(make_node(num.x, num.y, 3));
+					Check[3][num.x][num.y] = 1;
+				}
+				
+			}
+
+			if (num.ewsn == 2) {
+				if (Check[4][num.x][num.y] == 0) {
+					qu.push(make_node(num.x, num.y, 4));
+					Check[4][num.x][num.y] = 1;
+				}
+				if (Check[3][num.x][num.y] == 0) {
+					qu.push(make_node(num.x, num.y, 3));
+					Check[3][num.x][num.y] = 1;
+				}
+				
+			}
+
+			if (num.ewsn == 4) {
+				if (Check[1][num.x][num.y] == 0) {
+					qu.push(make_node(num.x, num.y, 1));
+					Check[1][num.x][num.y] = 1;
+				}
+				if (Check[2][num.x][num.y] == 0) {
+					qu.push(make_node(num.x, num.y, 2));
+					Check[2][num.x][num.y] = 1;
+				}
+				
+			}
+
+		}
+
+		cnt++;
+
+	}
+}
+int main() {
+	cin >> m >> n;
+
+	for (int i = 1; i <= m; i++) {
+		for (int p = 1; p <= n; p++) {
+			cin >> arr[i][p];
+		}
+	}
+	cin >> sr >> sc >> look;
+	cin >> er >> ec >> look1;
+
+	bfs(sr, sc, look);
+	return 0;
+
+}
