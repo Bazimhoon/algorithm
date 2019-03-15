@@ -1,0 +1,24 @@
+#include <iostream>
+using namespace std;
+const int MAX = 21000;
+int main() {
+
+  int n,m;
+  cin >> n >> m;
+  bool arr[MAX] ={1,1,};
+  for(int i = 2; i*i <= m; i++){
+    if(!arr[i]){
+      for(int p = i*2; p <= m; p+=i){
+        if(p % i == 0)
+        arr[p] = 1;
+    }
+    }
+    
+  }
+  for(int i = n; i <= m; i++){
+    if(!arr[i])
+    cout << i << " ";
+  }
+
+  return 0;
+}
