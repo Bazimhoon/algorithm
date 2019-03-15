@@ -1,0 +1,26 @@
+#include <iostream>
+using namespace std;
+const int MAX = 110;
+int main() {
+
+  int n;
+  cin >> n;
+  int l = 2*n-1;
+  int mid = l / 2;
+  int a = mid;
+  int b = mid;
+  
+  for(int i = 0; i < n; i++){
+    for(int p = 0; p < l; p++){
+      if(p >= a && p <= b){
+        cout << "*";
+      }
+      else
+      cout << " ";
+    }
+    a--;
+    b++;
+    cout << endl;
+  }
+  return 0;
+}

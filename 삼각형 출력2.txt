@@ -1,0 +1,21 @@
+#include <iostream>
+using namespace std;
+const int MAX = 110;
+
+int main() {
+
+  int n;
+  cin >> n;
+  
+  for(int i = 0; i < n; i++){
+    for(int p = 0; p < n; p++){
+      if(i+p >= n-1)
+      cout << '*';
+      else
+      cout << " ";
+    }
+    cout << endl;
+  }
+
+  return 0;
+}
