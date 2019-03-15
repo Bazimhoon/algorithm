@@ -1,0 +1,121 @@
+#include <iostream>
+using namespace std;
+#include<queue>
+
+const int MAX = 110;
+bool Check[MAX][MAX];
+char arr[MAX][MAX];
+int n;
+int dx[4] = {-1,0,1,0};
+int dy[4] = {0,1,0,-1};
+
+struct node{
+  int x, y, color;
+};
+node make_node(int a, int b, int c){
+  node ret;
+  ret.x = a;
+  ret.y = b;
+  ret.color = c;
+  
+  return ret;
+  
+}
+queue<node> qu;
+void bfs(int sr, int sc, int color){
+  Check[sr][sc] = 1;
+  qu.push(make_node(sr, sc, color));
+  
+  while(!qu.empty()){
+    node num = qu.front();
+    qu.pop();
+    
+    for(int i = 0; i < 4; i++){
+      int dxn = dx[i] + num.x;
+      int dyn = dy[i] + num.y;
+      
+      if(dxn < 0 || dyn < 0 || dxn >= n || dyn >= n || Check[dxn][dyn]
+       || color != arr[dxn][dyn])
+       continue;
+       
+       qu.push(make_node(dxn, dyn, color));
+       Check[dxn][dyn] = 1;
+    }
+    
+  }
+}
+
+void cowart(int sr, int sc, int color){
+  Check[sr][sc] = 1;
+  qu.push(make_node(sr,sc,color));
+  
+  while(!qu.empty()){
+    node num = qu.front();
+    qu.pop();
+    
+    for(int i = 0; i < 4; i++){
+      int dxn = dx[i] + num.x;
+      int dyn = dy[i] + num.y;
+      
+      if(dxn < 0 || dyn < 0 || dxn >= n || dyn >= n || Check[dxn][dyn])
+      continue;
+      
+      if(color == 'R' && arr[dxn][dyn] == 'B')
+      continue;
+      
+      if(color == 'G' && arr[dxn][dyn] == 'B')
+      continue;
+      
+      if(color == 'B' && arr[dxn][dyn] == 'G')
+      continue;
+      
+      if(color == 'B' && arr[dxn][dyn] == 'R')
+      continue;
+      
+      qu.push(make_node(dxn, dyn, color));
+      Check[dxn][dyn] = 1;
+    }
+  }
+}
+int main() {
+
+  cin >> n;
+  cin.ignore();
+  
+  int cnt = 0;
+  for(int i = 0; i < n; i++){
+    for(int p = 0; p < n; p++){
+      cin >> arr[i][p];
+    }
+  }
+  for(int i = 0; i < n; i++){
+    for(int p = 0; p < n; p++){
+      if(!Check[i][p]){
+        int a = arr[i][p];
+        bfs(i,p,a);
+        cnt++;
+      }
+    }
+  }
+  
+  for(int i = 0; i < n; i++){
+    for(int p = 0; p < n; p++){
+      Check[i][p] = 0;
+    }
+  }
+  cout << cnt << " ";
+  
+  int cnt1 = 0;
+  for(int i = 0; i < n; i++){
+    for(int p = 0; p < n; p++){
+      if(!Check[i][p]){
+        int a = arr[i][p];
+        cowart(i,p,a);
+        cnt1++;
+      }
+    }
+  }
+  cout << cnt1;
+
+  return 0;
+}
