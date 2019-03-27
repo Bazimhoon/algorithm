@@ -1,0 +1,69 @@
+#include<iostream>
+using namespace std;
+const int MAX = 300;
+int main() {
+
+	int n, s;
+	cin >> n >> s;
+
+  int arr[MAX][MAX];
+	int al = 2 * n - 1;
+	int mid = al / 2;
+	int start;
+	int start_num = s;
+	int a = mid;
+	int b = mid;
+	bool flag = true;
+
+	for (int i = 0; i < n; i++) {
+
+		if (flag == true) {
+
+			for (int p = 0; p < al; p++) {
+				if (p >= a && p <= b) {
+					arr[i][p] = start_num;
+					start_num++;
+				}
+
+				if (start_num >= 10)
+					start_num = 1;
+			}
+		}
+		else {
+
+			for (int p = al - 1; p >= 0; p--) {
+				if (p >= a && p <= b) {
+					arr[i][p] = start_num;
+					start_num++;
+				}
+
+				if (start_num >= 10)
+					start_num = 1;
+			}
+		}
+	
+	if(i == 0){
+	  a--;
+	  b++;
+	  continue;
+	}
+	if (flag == true)
+		flag = false;
+	else
+		flag = true;
+
+	a--;
+	b++;
+    }
+    for(int i = 0; i < n; i++){
+      for(int p = 0; p < al; p++){
+        if(arr[i][p] >= 1 && arr[i][p] <= 9)
+        cout << arr[i][p];
+        else
+        cout << " ";
+      }
+      cout << endl;
+    }
+
+	return 0;
+}
