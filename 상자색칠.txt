@@ -1,0 +1,45 @@
+#include <iostream>
+#include<cstring>
+using namespace std;
+const int MAX = 1100;
+
+int main() {
+
+  int n;
+  cin >> n;
+  int arr[MAX];
+  int idx[MAX];
+  memset(idx, 0, sizeof(idx));
+  bool flag = true;
+  
+  if(n < 6)
+  flag = false;
+  for(int i = 1; i <= n; i++){
+    cin >> arr[i];
+    if(arr[i] > n || arr[i] == 0){
+      flag = false;
+      break;
+    }
+    
+    idx[arr[i]]++;
+  }
+  
+  int sum = 0;
+  for(int i = 1; i <= 1000; i++){
+    if(idx[i] >= 2)
+    idx[i] = 2;
+    
+    sum+= idx[i];
+    
+  }
+  
+  if(flag == false)
+  cout << "NO";
+  else if(sum >= 6)
+  cout << "YES";
+  else
+  cout << "NO";
+  
+
+  return 0;
+}

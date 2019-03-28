@@ -1,0 +1,28 @@
+#include <iostream>
+using namespace std;
+const int MAX = 200;
+
+int main() {
+
+  int n;
+  cin >> n;
+  
+  int arr[MAX][MAX];
+  int num = 1;
+  for(int i = 0; i < n; i++){
+    int a = 0;
+    int b = i;
+    while(a < n && b >= 0){
+      arr[a++][b--] = num++;
+    }
+  }
+  
+  for(int i = 0; i < n; i++){
+    for(int p = 0; p < n-i; p++){
+      cout << arr[i][p] << " ";
+    }
+    cout << endl;
+  }
+
+  return 0;
+}
