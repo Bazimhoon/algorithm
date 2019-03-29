@@ -1,0 +1,33 @@
+#include <iostream>
+using namespace std;
+
+int main() {
+
+  int n,m;
+  cin >> n >> m;
+  int GCD;
+  int LCM;
+  int com;
+  
+  if(n > m)
+  com = m;
+  else
+  com = n;
+  
+  for(int i = 1; i <= com; i++){
+    if(n % i == 0 && m % i == 0)
+    GCD = i;
+  }
+  
+  int a, b;
+  a = n / GCD;
+  b = m / GCD;
+  
+  LCM = a * b * GCD;
+  cout << GCD << endl;
+  cout << LCM;
+  
+  
+
+  return 0;
+}

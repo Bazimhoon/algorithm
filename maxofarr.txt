@@ -1,0 +1,28 @@
+#include <iostream>
+using namespace std;
+
+int main() {
+
+  int arr[10][10];
+  for(int i = 1; i <= 9; i++){
+    for(int p = 1; p <= 9; p++){
+      cin >> arr[i][p];
+    }
+} 
+  int max = 0;
+  int max_row = 0;
+  int max_col = 0;
+  
+  for(int i = 1; i <= 9; i++){
+    for(int p = 1; p <= 9; p++){
+      if(max < arr[i][p]){
+        max = arr[i][p];
+        max_row = i;
+        max_col = p;
+      }
+    }
+  }
+  cout << max << endl;
+  cout << max_row << " " << max_col;
+  return 0;
+}

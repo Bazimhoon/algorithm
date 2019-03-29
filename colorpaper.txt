@@ -1,0 +1,34 @@
+#include <iostream>
+using namespace std;
+const int MAX = 120;
+
+int main() {
+
+  int n;
+  cin >> n;
+  int num = 1;
+  int arr[MAX][MAX];
+  while(num <= n){
+    int a, b, c, d;
+    cin >> a >> b >> c >> d;
+    
+    for(int i = a; i < a+c; i++){
+      for(int p = b; p < b+d; p++){
+        arr[i][p] = num;
+      }
+    }
+    num++;
+  }
+  
+  int arr1[MAX] = {0};
+  for(int i = 0; i < 101; i++){
+    for(int p = 0; p < 101; p++){
+      arr1[arr[i][p]]++;
+    }
+  }
+  for(int i = 1; i <= n; i++){
+    
+    cout << arr1[i] << endl;
+  }
+  return 0;
+}

@@ -1,0 +1,43 @@
+#include <iostream>
+using namespace std;
+
+int main() {
+  
+  int n;
+  cin >> n;
+  
+  int arr[10][10] = {0};
+  for(int i = 0; i < 10; i++){
+    for(int p = 0; p < 10; p++){
+      cin >> arr[i][p];
+    }
+  }
+  
+  int cnt = 0;
+  
+  while(cnt < n){
+    for(int i = 0; i < 10; i++){
+      if(cnt == i)
+      continue;
+      
+      if(arr[cnt][i] == 0)
+      arr[cnt][i] = 1;
+      else
+      arr[cnt][i] = 0;
+    }
+    for(int i = 0; i < 10; i++){
+      if(arr[i][cnt] == 0)
+      arr[i][cnt] = 1;
+      else
+      arr[i][cnt] = 0;
+    }
+    cnt++;
+  }
+  for(int i = 0; i < 10; i++){
+    for(int p = 0; p < 10; p++){
+      cout << arr[i][p] << " ";
+    }
+    cout << endl;
+  }
+  return 0;
+}

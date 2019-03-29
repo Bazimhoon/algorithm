@@ -1,0 +1,30 @@
+#include <iostream>
+using namespace std;
+
+int main() {
+
+   int arr[10];
+   int num[1100] = {0};
+   int sum = 0;
+   for(int i = 0; i < 10; i++){
+     cin >> arr[i];
+     sum+=arr[i];
+     num[arr[i]]++;
+   }
+   cout << sum / 10 << endl;
+   
+   int max = 0;
+   int max_idx = 0;
+   
+   for(int i = 0; i<1100; i++){
+     if(num[i] > max){
+       max = num[i];
+       max_idx = i;
+     }
+   }
+   cout << max_idx;
+   
+   
+
+  return 0;
+}

@@ -1,0 +1,62 @@
+#include <iostream>
+#include<queue>
+
+using namespace std;
+typedef pair<int, int> pair_t;
+const int MAX = 110;
+int n;
+int x, y, r;
+queue<pair_t> qu;
+bool Check[MAX][MAX];
+int arr[MAX][MAX];
+int dx[4] = {-1,0,1,0};
+int dy[4] = {0,1,0,-1};
+int pt = 1;
+void bfs(int row, int col){
+  arr[row][col] = -1;
+  Check[row][col] = 1;
+  qu.push(make_pair(row, col));
+  
+  while(!qu.empty()){
+    int size = qu.size();
+    
+    if(pt > r)
+    break;
+    
+    while(size--){
+      pair_t num = qu.front();
+      qu.pop();
+    
+    for(int i = 0; i < 4; i++){
+      int dx_num = num.first + dx[i];
+      int dy_num = num.second + dy[i];
+      
+      if(dx_num > n || dy_num > n || dx_num < 1 || dy_num < 1
+      || Check[dx_num][dy_num])
+      continue;
+      
+      arr[dx_num][dy_num] = pt;
+      qu.push(make_pair(dx_num, dy_num));
+      Check[dx_num][dy_num] = 1;
+      }
+    }
+      pt++;
+  }
+  
+}
+int main() {
+
+  cin >> n >> x >> y >> r;
+  bfs(x, y);
+  
+  for(int i = 1; i <= n; i++){
+    for(int p = 1; p <= n; p++){
+      if(arr[i][p] == -1)
+      cout << "x" << " ";
+      else
+      cout << arr[i][p] << " ";
+    }
+    cout << endl;
+}
+  return 0;
+}
