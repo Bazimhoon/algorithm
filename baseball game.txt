@@ -1,0 +1,101 @@
+#include <iostream>
+using namespace std;
+const int MAX = 1000;
+
+int cmp[3];
+int cmp_cpy[MAX][3];
+int row = 0;
+void search(int depth){
+  int a = 0;
+  for(int i = 1; i <= 9; i++){
+    
+    if(depth == 3){
+      int sum = 0;
+      for(int p = 0; p < 3; p++){
+        
+        if(p == 0)
+        cmp_cpy[row][p] = cmp[p];
+        else if(p == 1)
+        cmp_cpy[row][p] = cmp[p];
+        else
+        cmp_cpy[row][p] = cmp[p];
+      }
+      row++;
+      return;
+    }
+    
+    cmp[depth] = i;
+    if(cmp[depth-1] == cmp[depth] || cmp[depth-2] == cmp[depth])
+          continue;
+    else 
+    search(depth+1);
+    
+  }
+}
+int main() {
+
+  int n;
+  cin >> n;
+  int arr[3];
+  int num_arr[MAX];
+  
+  search(0);
+  
+  for(int i = 0; i < n; i++){
+    
+    int strike; 
+    int ball;
+    
+    for(int p = 0; p < 3; p++){
+      scanf("%1d", &arr[p]);
+      
+    }
+    scanf("%d %d", &strike, &ball);
+    
+    for(int x = 0; x < row; x++){
+      int st_cmp = 0;
+      int st_ball = 0;
+      for(int y = 0; y < 3; y++){
+        if(arr[y] == cmp_cpy[x][y]){
+          st_cmp++;
+        }
+        
+        else{
+          for(int r = 0; r < 3; r++){
+            if(cmp_cpy[x][r] == arr[y])
+            st_ball++;
+          }
+        }
+      }
+      //cout << "st_cmp : " << st_cmp << " " << "st_ball : " << st_ball << endl;
+      
+      if(st_cmp == strike && st_ball == ball){
+        //cout << "GOOD" << endl;
+     
+      }
+      
+      else{
+        for(int q = 0; q < 3; q++){
+          cmp_cpy[x][q] = 0;
+          
+        }
+      }
+      // for(int m = 0; m < 3; m++){
+      //   cout << cmp_cpy[x][m];
+      // }
+      // cout << endl;
+    }
+  }
+  int cnt = 0;
+  for(int i = 0; i < row; i++){
+    for(int p = 0; p < 3; p++){
+      if(cmp_cpy[i][p] != 0)
+      cnt++;
+      break;
+    }
+   
+  }
+  cout << cnt;
+
+  return 0;
+}

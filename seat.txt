@@ -1,0 +1,90 @@
+#include<iostream>
+using namespace std;
+const int MAX = 1100;
+
+int main(){
+  
+  int c, r;
+  cin >> c >> r;
+  
+  int num;
+  cin >> num;
+  
+  int arr[MAX][MAX];
+  int result = 1;
+  bool check[MAX][MAX];
+  bool flag = true;
+  int i = 1;
+  int p = 1;
+  
+  while(flag){
+    
+    while(p <= r && !check[i][p]){
+      arr[i][p] = result++;
+      
+      check[i][p] = 1;
+      
+      if(arr[i][p] == num){
+        cout << i << " " << p;
+        flag = false;
+        break;
+      }
+      p++;
+    }
+    p -= 1;
+    i++;
+ 
+    while(i <= c && !check[i][p]){
+      arr[i][p] = result++;
+      
+      check[i][p] = 1;
+      
+      if(arr[i][p] == num){
+        cout << i << " " << p;
+        flag = false;
+        break;
+      }
+      i++;
+    }
+    i -= 1;
+    p--;
+
+    while(p >= 1 && !check[i][p]){
+      arr[i][p] = result++;
+      
+      check[i][p] = 1;
+      
+      if(arr[i][p] == num){
+        cout << i << " " << p;
+        flag = false;
+        break;
+      }
+      p--;
+    }
+    p += 1;
+    i--;
+
+    while(i >= 1 && !check[i][p]){
+      arr[i][p] = result++;
+      
+      check[i][p] = 1;
+      
+      if(arr[i][p] == num){
+        cout << i << " " << p;
+        flag = false;
+        break;
+      }
+      i--;
+    }
+    i += 1;
+    p++;
+    
+    if(flag == true && check[i+1][p] && check[i][p+1] && check[i-1][p] && check[i][p-1]){
+      cout << 0;
+      break;
+    }
+    
+  }
+  return 0;
+  
+}

@@ -1,0 +1,60 @@
+#include <iostream>
+using namespace std;
+const int MAX = 25;
+int main() {
+
+  int c, r;
+  cin >> c >> r;
+  
+  int arr[MAX][MAX];
+  for(int i = 0 ; i < r; i++){
+    for(int p = 0; p < c; p++){
+      cin >> arr[i][p];
+    }
+  }
+  int avail[MAX];
+  for(int i = 0; i < c; i++){
+    bool flag = true;
+    for(int p = 0; p < r; p++){
+      if(arr[p][i] == 1){
+        avail[i] = p-1;
+        flag = false;
+        break;
+      }
+    }
+    if(flag == true)
+    avail[i] = r-1;
+  }
+  
+  
+  int max = 0;
+  int max_pt;
+  for(int i = 0 ; i < c; i++){
+    if(avail[i] >= 3){
+      int cnt = 0;
+      for(int a = avail[i]; a > avail[i]-4; a--){
+        bool flag = true;
+        for(int b = 0; b < c; b++){
+          if(b == i)
+          continue;
+          if(arr[a][b] != 1){
+            flag = false;
+            break;
+          }
+        }
+        if(flag == false)
+        continue;
+        else{
+          cnt++;
+        }
+      }
+      if(max < cnt){
+        max = cnt;
+        max_pt = i+1;
+      }
+    }
+  }
+  cout << max_pt << " " << max;
+  
+  return 0;
+}

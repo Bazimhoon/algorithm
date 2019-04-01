@@ -1,0 +1,77 @@
+#include <iostream>
+using namespace std;
+
+int main() {
+
+  int bingo[5][5];
+  int check[5][5];
+  int row[5] = {0};
+  int col[5] = {0};
+  int cross[2] = {0};
+  int num = 0;
+  bool flag = false;
+  for(int i = 0; i < 5; i++){
+    for(int p = 0; p < 5; p++){
+      cin >> bingo[i][p];
+    }
+  }
+  for(int i = 0; i < 5; i++){
+    for(int p = 0; p < 5; p++){
+      cin >> check[i][p];
+      num++;
+      
+      for(int x = 0; x < 5; x++){
+        for(int y = 0; y < 5; y++){
+          if(bingo[x][y] == check[i][p]){
+            if(x+y == 4 && x != y){
+              cross[0]++;
+              row[x]++;
+              col[y]++;
+            }
+            else if(x+y != 4 && x == y){
+              cross[1]++;
+              row[x]++;
+              col[y]++;
+            }
+            else if(x+y == 4 && x == y){
+              cross[0]++;
+              cross[1]++;
+              row[x]++;
+              col[y]++;
+        
+            }
+            else{
+              row[x]++;
+              col[y]++;
+            }
+            break;
+          }
+        }
+      }
+      int cnt = 0;
+      for(int xX = 0; xX < 5; xX++){
+        if(row[xX] == 5)
+        cnt++;
+        if(col[xX] == 5)
+        cnt++;
+      }
+      for(int xX = 0; xX < 2; xX++){
+        if(cross[xX] == 5)
+        cnt++;
+      }
+      
+      if(cnt >= 3){
+        cout << num;
+        flag = true;
+        break;
+      }
+      
+    }
+    if(flag == true)
+    break;
+  }
+  
+  
+
+  return 0;
+}
