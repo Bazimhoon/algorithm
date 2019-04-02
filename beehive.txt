@@ -1,0 +1,25 @@
+#include <iostream>
+using namespace std;
+const int MAX = 1100000;
+int main() {
+
+  //1
+  //2 ~ 7 6개
+  //8 ~ 19 12개
+  //20 ~ 37 18개
+  //38 ~ 61 24개
+  
+  int n;
+  int plus = 6;
+  int cnt = 1;
+  int result = 1;
+  cin >> n;
+  while(cnt < n){
+    cnt += plus;
+    plus += 6;
+    result++;
+  }
+  cout << result;
+
+  return 0;
+}

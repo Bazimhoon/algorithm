@@ -1,0 +1,34 @@
+#include <iostream>
+using namespace std;
+const int MAX = 10000;
+int main() {
+
+
+  int arr[MAX][3];
+  int cnt = 0;
+  for(int i = 0; i < MAX; i++){
+    cnt++;
+    bool flag = true;
+    for(int p = 0; p < 3; p++){
+      cin >> arr[i][p];
+      
+      if(p == 2){
+        if(arr[i][p-2] == 0 && arr[i][p-1] == 0 && arr[i][p] == 0){
+          flag = false;
+          break;
+        }
+          
+      }
+    }
+    if(flag == false)
+    break;
+  }
+  for(int i = 0; i < cnt-1; i++){
+    if(arr[i][1] - arr[i][0] == arr[i][2] - arr[i][1])
+    cout << "AP" << " " << arr[i][2] + arr[i][1] - arr[i][0] << endl;
+    else if(arr[i][1]/arr[i][0] == arr[i][2]/arr[i][1])
+    cout << "GP" << " " << arr[i][2] * (arr[i][1]/arr[i][0]) << endl;
+  }
+
+  return 0;
+}

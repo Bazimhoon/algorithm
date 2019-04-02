@@ -1,0 +1,19 @@
+#include <iostream>
+#include<algorithm>
+using namespace std;
+
+const int MAX = 110000;
+
+int main() {
+
+  int n,k;
+  cin >> n >> k;
+  int arr[MAX];
+  for(int i = 0; i < n; i++){
+    cin >> arr[i];
+  }
+  sort(arr, arr+n);
+  
+  cout << arr[n-k];
+  return 0;
+}
