@@ -1,0 +1,30 @@
+#include <iostream>
+using namespace std;
+
+int main() {
+
+  long long int a, b;
+  cin >> a >> b;
+  long long int gcd;
+  long long int x = a;
+  long long int y = b;
+  long long int r;
+  
+  while(1){
+    r = x % y;
+    if(r == 0){
+      gcd = y;
+      break;
+    }
+    else{
+      x = y;
+      y = r;
+    }
+  }
+  
+  int p = a / gcd;
+  int q = b / gcd;
+  cout << gcd * p * q;
+
+  return 0;
+}

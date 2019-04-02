@@ -1,0 +1,44 @@
+#include <iostream>
+using namespace std;
+const int MAX = 100010;
+
+int gcd_get(int a, int b){
+  int r;
+  
+  while(1){
+    r = a % b;
+    if(r == 0){
+      return b;
+      
+    }
+    else{
+      a = b; 
+      b = r;
+    }
+  }
+}
+int main() {
+
+  int arr[MAX];
+  int distance[MAX];
+  int tree;
+  cin >> tree;
+  for(int i = 0; i < tree; i++){
+    cin >> arr[i];
+  }
+  for(int i = 1; i < tree; i++){
+    distance[i] = arr[i] - arr[i-1];
+  }
+  int gcd = distance[1];
+  for(int i = 1; i < tree; i++){
+    gcd = gcd_get(gcd, distance[i]);
+    //cout << gcd << endl;
+  }
+  
+  int sum = 0;
+  for(int i = 1; i < tree; i++){
+    sum += distance[i] / gcd - 1;
+  }
+    cout << sum;
+  return 0;
+}
