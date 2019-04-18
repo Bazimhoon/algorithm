@@ -1,0 +1,44 @@
+#include<iostream>
+using namespace std;
+
+const int MAX = 250000;
+int main(){
+  
+  int arr[MAX];
+  arr[1] = 1;
+  for(int i = 2; i*i <= MAX; i++){
+        if(arr[i] == 1)
+        continue;
+        
+        for(int p = i; p <= MAX; p++){
+          if(arr[p] == 1)
+          continue;
+          
+          else{
+            if(p == i)
+            continue;
+            else if(p % i == 0)
+            arr[p] = 1;
+          }
+        }
+      }
+      
+  while(1){
+    int a;
+    int cnt = 0;
+    cin >> a;
+    if(a == 0)
+    break;
+    
+    else{
+      for(int i = a+1; i <= 2*a; i++){
+        
+        if(arr[i] == 0)
+          cnt++;
+      }
+    }
+    cout << cnt << endl;
+  }
+  return 0;
+  
+}
