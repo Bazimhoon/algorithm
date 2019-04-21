@@ -1,0 +1,54 @@
+#include<iostream>
+#include<cstring>
+using namespace std;
+
+const int MAX = 110;
+
+int main(){
+  
+  char a[MAX];
+  char b[MAX];
+  
+  cin >> a >> b;
+  
+  int a_num = strlen(a);
+  int b_num = strlen(b);
+  int aint[MAX] = {0};
+  int bint[MAX] = {0};
+  int cint[MAX] = {0};
+  int p = 0;
+  for(int i = a_num-1; i >= 0; i--){
+    aint[p] = a[i] - 48;
+    p++;
+    
+  }  
+  p = 0;
+  for(int i = b_num-1; i >= 0; i--){
+    bint[p] = b[i] - 48;
+    p++;
+  }
+  
+  int c_num;
+  if(a_num >= b_num)
+  c_num = a_num;
+  else
+  c_num = b_num;
+  
+  for(int i = 0; i < c_num; i++){
+    cint[i] += aint[i] + bint[i];
+    if(cint[i] >= 10){
+      cint[i] -= 10;
+      cint[i+1]++;
+    }
+  }
+  for(int i = c_num; i >= 0; i--){
+    if(i == c_num && cint[i] != 0)
+    cout << cint[i];
+    else if(i == c_num && cint[i] == 0)
+    continue;
+    else
+    cout << cint[i];
+  }
+
+  return 0;
+}

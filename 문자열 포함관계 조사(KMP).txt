@@ -1,0 +1,43 @@
+#include<iostream>
+#include<cstring>
+using namespace std;
+const int MAX = 1100;
+int main(){
+  
+  char txt[MAX];
+  char pat[MAX];
+  cin >> txt >> pat;
+  
+  int pt = 1;
+  int pp = 0;
+  int skip[MAX];
+  
+  skip[pt] = 0;
+  while(pt != strlen(pat)){
+    if(pat[pt] == pat[pp])
+    skip[++pt] = ++pp;
+    else if(pp == 0)
+    skip[++pt] = pp;
+    else
+    pp = skip[pp];
+  }
+  
+  pt = pp = 0;
+  while(pt != strlen(txt) && pp != strlen(pat)){
+    if(txt[pt] == pat[pp]){
+      pt++;
+      pp++;
+      
+    }
+    else if(pp == 0)
+    pt++;
+    else
+    pp = skip[pp];
+  }
+  
+  if(pp == strlen(pat))
+  cout << "YES";
+  else
+  cout << "NO";
+  return 0;
+}

@@ -1,0 +1,62 @@
+#include<iostream>
+#include<cstring>
+using namespace std;
+
+const int MAX = 220;
+
+int main(){
+  
+  char a[MAX];
+  char b[MAX];
+  int aint[MAX] = {0};
+  int bint[MAX] = {0};
+  int cint[MAX] = {0};
+  cin >> a >> b;
+  
+  int alen = strlen(a);
+  int blen = strlen(b);
+  int clen = alen + blen;
+  int p = 0;
+  for(int i = alen-1; i >= 0; i--){
+    aint[p++] = a[i] - 48;
+  }
+  p = 0;
+  for(int i = blen-1; i >= 0; i--){
+    bint[p++] = b[i] - 48;
+  }
+  
+  if(alen > blen){
+    for(int i = 0; i < blen; i++){
+      int r = i;
+      for(int p = 0; p < alen; p++){
+        int num = cint[r] + aint[p] * bint[i];
+        cint[r] = num % 10;
+        cint[r+1] += num / 10;
+        r++;
+      }
+    }
+  }
+  else{
+    for(int i = 0; i < alen; i++){
+      int r = i;
+      for(int p = 0; p < blen; p++){
+        int num = cint[r] + aint[i] * bint[p];
+        cint[r] = num % 10;
+        cint[r+1] += num / 10;
+        r++;
+      }
+    }
+  }
+  int start = 0;
+  for(int i = clen-1; i >= 0; i--){
+    if(cint[i] != 0){
+      start = i;
+      break;
+    }
+  }
+  for(int i = start; i >= 0; i--){
+    cout << cint[i];
+  }
+  
+  return 0;
+}

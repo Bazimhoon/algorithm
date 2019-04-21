@@ -1,0 +1,32 @@
+#include<iostream>
+using namespace std;
+#include<cstring>
+const int MAX = 1100;
+char arr[MAX];
+void palindrom(int start, int end){
+  if(start >= end){
+    cout << "YES";
+    return;
+  }
+  
+  
+  if(arr[start] == arr[end]){
+    palindrom(start+1, end-1);
+  }
+  else{
+    cout << "NO";
+    return;
+  }
+  
+}
+int main(){
+  
+  
+  cin >> arr;
+  int start, end;
+  start = 0;
+  end = strlen(arr)-1;
+  palindrom(start, end);
+  return 0;
+  
+}

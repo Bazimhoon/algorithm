@@ -1,0 +1,118 @@
+#include<iostream>
+#include<cstring>
+using namespace std;
+const int MAX = 110;
+
+int main(){
+  
+  char a[MAX];
+  char b[MAX];
+  
+  cin >> a >> b;
+  int alen = strlen(a);
+  int blen = strlen(b);
+  int clen;
+  
+  if(alen >= blen)
+  clen = alen;
+  else
+  clen = blen;
+  
+  int aint[MAX] = {0};
+  int a1int[MAX] = {0};
+  int bint[MAX] = {0};
+  int b1int[MAX] = {0};
+  int cint[MAX] = {0};
+  int c1int[MAX] = {0};
+  int p = 0;
+  bool flag = false;
+  bool flag1 = false;
+  
+  for(int i = alen-1; i >= 0; i--){
+    aint[p] = a[i] - 48;
+    a1int[p] = aint[p];
+    p++;
+  }
+  
+  p = 0;
+  for(int i = blen-1; i >= 0; i--){
+    bint[p] = b[i] - 48;
+    b1int[p] = bint[p];
+    p++;
+  }
+  
+  if(alen > blen){
+    for(int i = 0; i < alen; i++){
+
+      if(aint[i] < bint[i]){
+        cint[i] = aint[i] + 10 - bint[i];
+        aint[i+1]--;
+      }
+      else{
+        cint[i] = aint[i] - bint[i];
+      }
+    }
+  }
+  else{
+    if(blen > alen){
+      for(int i = 0; i < blen; i++){
+        if(bint[i] < aint[i]){
+          cint[i] = bint[i] + 10 - aint[i];
+          bint[i+1]--;
+        }
+        else{
+          cint[i] = bint[i] - aint[i];
+        }
+      }
+      flag = true;
+    }
+    else if(alen == blen){
+      for(int i = 0; i < alen; i++){
+        if(a1int[i] < b1int[i]){
+          c1int[i] = a1int[i] + 10 - b1int[i];
+          a1int[i+1]--;
+        }
+        else{
+          c1int[i] = a1int[i] - b1int[i];
+        }
+      }
+      if(a1int[alen] == -1){
+        for(int i = 0; i < alen; i++){
+          if(bint[i] < aint[i]){
+            cint[i] = bint[i] + 10 - aint[i];
+            bint[i+1]--;
+          }
+          else{
+            cint[i] = bint[i] - aint[i];
+          }
+        }
+        flag = true;
+      }
+      else{
+        for(int i = 0; i < alen; i++){
+          cint[i] = c1int[i];
+        }
+      }
+    }
+  }
+  if(flag == true)
+  cout << "-";
+  
+  int start = 0;
+  for(int i = clen-1; i >= 0; i--){
+    
+    if(cint[i] != 0){
+      flag1 = true;
+      start = i;
+      break;
+    }
+  }
+  for(int i = start; i >= 0; i--){
+      cout << cint[i];
+    }
+  
+  
+  
+  
+  return 0;
+}

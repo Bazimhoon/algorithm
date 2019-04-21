@@ -1,0 +1,28 @@
+#include<iostream>
+using namespace std;
+#include<cstring>
+
+const int MAX = 1100;
+
+int main(){
+  
+  char arr[MAX];
+  cin >> arr;
+  
+  int size = strlen(arr);
+  for(int i = 0; i < size; ){
+    int cnt = 1;
+    int p = i;
+    while(arr[p] == arr[p+1]){
+      cnt++;
+      p++;
+    }
+    if(cnt == 1)
+    cout << arr[p];
+    else
+    cout << cnt << arr[p];
+    
+    i += cnt;
+  }
+  return 0;
+}

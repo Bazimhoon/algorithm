@@ -1,0 +1,35 @@
+//Brute-Force
+#include<iostream>
+#include<cstring>
+using namespace std;
+const int MAX = 1100;
+int main(){
+  
+  char a[MAX];
+  char b[MAX];
+  
+  cin >> a >> b;
+  int alen = strlen(a);
+  int blen = strlen(b);
+  bool flag = false;
+  for(int i = 0; i < alen; i++){
+    int cnt = 0;
+    int c = i;
+    for(int p = 0; p < blen; p++){
+      if(b[p] == a[c]){
+        cnt++;
+        c++;
+      }
+      if(cnt == blen){
+        flag = true;
+      }
+    }
+    if(flag == true){
+      cout << "YES";
+      break;
+    }
+  }
+  if(flag == false)
+  cout << "NO";
+  return 0;
+}
