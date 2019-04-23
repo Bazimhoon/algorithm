@@ -1,0 +1,114 @@
+#include<iostream>
+using namespace std;
+const int MAX = 15;
+int n;
+int arr[MAX];
+int arr1[MAX];
+char ch[MAX];
+int idx[MAX] = {0};
+int idx1[MAX] = {0};
+bool flag_max = false;
+bool flag_min = false;
+
+void max_equal(int root){
+  if(root == n+1){
+    for(int i = 0; i < n+1; i++){
+      cout << arr[i];
+    }
+    cout << endl;
+    flag_max = true;
+    return;
+  }
+  else{
+    for(int i = 9; i >= 0; i--){
+      if(root == 0){
+        arr[root] = i;
+        idx[i] = 1;
+        max_equal(root+1);
+        idx[i] = 0;
+      }
+      else{
+        if(ch[root-1] == '<'){
+          if(arr[root-1] < i && idx[i] == 0){
+            arr[root] = i;
+            idx[i] = 1;
+            max_equal(root+1);
+            idx[i] = 0;
+          }
+          else
+          continue;
+        }
+        else if(ch[root-1] == '>'){
+          if(arr[root-1] > i && idx[i] == 0){
+            arr[root] = i;
+            idx[i] = 1;
+            max_equal(root+1);
+            idx[i] = 0;
+          }
+          else
+          continue;
+        }
+      }
+      if(flag_max == true)
+      return;
+    }
+  }
+  
+  
+}
+
+void min_equal(int root){
+  if(root == n+1){
+    for(int i = 0; i < n+1; i++){
+      cout << arr1[i];
+    }
+    cout << endl;
+    flag_min = true;
+    return;
+  }
+  
+  else{
+    for(int i = 0; i < 10; i++){
+      if(root == 0){
+      arr1[root] = i;
+      idx1[i] = 1;
+      min_equal(root+1);
+      idx1[i] = 0;
+    }
+    else{
+      if(ch[root-1] == '<' && idx1[i] == 0){
+        if(arr1[root-1] < i){
+          arr1[root] = i;
+          idx1[i] = 1;
+          min_equal(root+1);
+          idx1[i] = 0;
+        }
+        else 
+        continue;
+      }
+      else if(ch[root-1] == '>'){
+        if(arr1[root-1] > i && idx1[i] == 0){
+          arr1[root] = i;
+          idx1[i] = 1;
+          min_equal(root+1);
+          idx1[i] = 0;
+        }
+        else
+        continue;
+      }
+    }
+    if(flag_min == true)
+    return;
+  }
+    }
+}
+int main(){
+  
+  cin >> n;
+  for(int i = 0; i < n; i++){
+    cin >> ch[i];
+  }
+  max_equal(0);
+  min_equal(0);
+  return 0;
+}

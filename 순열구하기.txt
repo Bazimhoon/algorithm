@@ -1,0 +1,38 @@
+#include<iostream>
+using namespace std;
+
+const int MAX = 200;
+int n, r;
+int arr[MAX] {0};
+int idx[MAX] = {0};
+void permutation(int root){
+  if(root == r){
+    for(int i = 0; i < r; i++){
+      cout << (char)arr[i];
+    }
+    cout << endl;
+    return;
+  }
+  else{
+    for(int i = 97; i < 97+n; i++){
+      if(idx[i] != -1){
+        arr[root] = i;
+        idx[i] = -1;
+        
+        permutation(root+1);
+        
+        arr[root] = 0;
+        idx[i] = 0;
+      }
+      
+    }
+  }
+}
+int main(){
+  
+  
+  cin >> n >> r;
+  
+  permutation(0);
+  return 0;
+}

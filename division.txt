@@ -1,0 +1,44 @@
+#include<iostream>
+using namespace std;
+const int MAX = 30;
+
+int n;
+int arr[MAX];
+int cnt = 0;
+void division(int root, int sum, int max){
+  if(sum == n){
+    cnt++;
+    for(int i = 0; i < root; i++){
+      cout << arr[i];
+      if(i != root - 1)
+      cout << "+";
+    }
+    cout << endl;
+    return;
+  }
+  
+  for(int i = n-1; i >= 1; i--){
+    if(i <= max){
+      arr[root] = i;
+      sum += i;
+      if(sum <= n){
+        division(root+1, sum, i);
+        sum -= i;
+      }
+    
+      else
+      sum -= i;
+    }
+    else
+    continue;
+    
+  }
+}
+int main(){
+  
+  cin >> n;
+  
+  division(0,0,40);
+  cout << cnt;
+  return 0;
+}

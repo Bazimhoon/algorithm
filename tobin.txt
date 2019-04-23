@@ -1,0 +1,41 @@
+#include <iostream>
+using namespace std;
+
+const int MAX = 40;
+int n,k;
+int arr[MAX];
+int count = 0;
+
+void tobin(int root, int one){
+  if(root == n && one == k){
+      for(int i = 0; i < n; i++){
+        cout << arr[i];
+      }
+      cout << endl;
+    return;
+  }
+  if(one > k)
+  return;
+  
+  if(root == n && one != k)
+  return;
+  
+    for(int i = 1; i >= 0; i--){  
+        
+      arr[root] = i;
+      if(i == 1)
+      tobin(root+1, one+1);
+      else
+      tobin(root+1, one);
+
+    }
+    
+  
+}
+int main() {
+
+  cin >> n >> k;
+  tobin(0,0);
+
+  return 0;
+}
