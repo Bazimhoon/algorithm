@@ -1,0 +1,65 @@
+#include<iostream>
+using namespace std;
+const int MAX = 100000;
+int n;
+int arr[MAX];
+
+// pivot 4 
+// left 3 2 -1 2
+// right 5 8 7 9 10  
+int getleft(int start, int end, int pivot, int result[]){
+  int idx = 0;
+  for(int i = start; i <= end; i++){
+    if(pivot > arr[i]){
+      result[idx++] = arr[i];
+    }
+  }
+  return idx;
+}
+
+int getright(int start, int end, int pivot, int result[]){
+  int idx = 0;
+  for(int i = start; i <= end; i++){
+    
+    if(pivot <= arr[i]){
+      result[idx++] = arr[i];
+    }
+  }
+  return idx;
+}
+void quicksort(int start, int end){
+  if(start >= end)
+  return;
+  
+  int pivot = arr[start];
+  int left[MAX]; 
+  int right[MAX];
+  
+  int left_cnt = getleft(start+1, end, pivot, left);
+  int right_cnt = getright(start+1, end, pivot, right);
+  
+  for(int i = 0; i < left_cnt; i++){
+    arr[i+start] = left[i];
+  }
+  arr[start+left_cnt] = pivot;
+  
+  for(int i = 0; i < right_cnt; i++){
+    arr[i+start+left_cnt+1] = right[i];
+  }
+  
+  quicksort(start, start+left_cnt-1);
+  quicksort(start+left_cnt+1, end);
+}
+int main(){
+  
+  cin >> n;
+  for(int i = 0; i < n; i++){
+    cin >> arr[i];
+  }
+  
+  quicksort(0,n-1);
+  for(int i = 0; i < n; i++){
+    cout << arr[i] << " ";
+  }
+  return 0;
+}
