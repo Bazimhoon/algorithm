@@ -1,0 +1,48 @@
+#include<iostream>
+using namespace std;
+const int MAX = 100000;
+int n;
+int q;
+int arr[MAX];
+int question[MAX];
+
+void binarysearch(int search, int start, int end){
+  if(start >= end){
+    if(arr[start] == search){
+      cout << "YES";
+    }
+    
+    else{
+      cout << "NO";
+    }
+    return;
+  }
+  int mid = (start + end) / 2;
+  if(arr[mid] == search){
+    cout << "YES";
+    return;
+  }
+  
+  else if(arr[mid] > search){
+    binarysearch(search, start, mid-1);
+  }
+  else{
+    binarysearch(search, mid+1, end);
+  }
+}
+  
+int main(){
+  
+  cin >> n >> q;
+  for(int i = 0; i < n; i++){
+    cin >> arr[i];
+  }
+  for(int i = 0; i < q; i++){
+    cin >> question[i];
+    binarysearch(question[i], 0, n-1);
+    cout << endl;
+  }
+  
+  
+  return 0;
+}

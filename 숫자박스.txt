@@ -1,0 +1,47 @@
+#include<iostream>
+#include<algorithm>
+using namespace std;
+const int MAX = 1000000;
+
+int n,m;
+int card[MAX];
+int check[MAX];
+
+void binarysearch(int search, int start, int end){
+  if(start >= end){
+    if(card[start] == search)
+    cout << "1";
+    else
+    cout << "0";
+    
+    return;
+  }
+  int mid = (start + end) / 2;
+  if(card[mid] == search){
+    cout << "1";
+    return;
+  }
+  else if(card[mid] > search)
+  binarysearch(search, start, mid-1);
+  else
+  binarysearch(search, mid+1, end);
+}
+int main(){
+  cin >> n;
+  
+  for(int i = 0; i < n; i++){
+    cin >> card[i];
+  }
+  sort(card, card+n);
+  
+  cin >> m;
+  
+  for(int i = 0; i < m; i++){
+    cin >> check[i];
+    binarysearch(check[i], 0, n-1);
+    cout << endl;
+  }
+  
+  
+  return 0;
+}
