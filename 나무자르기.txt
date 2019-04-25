@@ -1,0 +1,54 @@
+#include<iostream>
+using namespace std;
+const int MAX = 1000000;
+const int TREE_MAX = 1000000000;
+int tree[MAX];
+long long int n,m;
+
+void treecutting(int start, int end, int result){
+  if(start >= end){
+    long long int sum = 0;
+    for(int i = 0; i < n; i++){
+      if(tree[i] > start)
+      sum += tree[i] - start;
+    }
+    if(sum >= result)
+    cout << start;
+    else
+    cout << start-1;
+    
+    return;
+  }
+  
+  
+  int mid = (start+end)/2;
+  long long int sum = 0;
+  for(int i = 0; i < n; i++){
+    if(tree[i] > mid)
+    sum += tree[i] - mid;
+  }
+  
+  if(sum < result){
+    treecutting(start, mid-1, result);
+  }
+  
+  else if(result < sum){
+    treecutting(mid+1, end, result);
+  }
+  
+  else{
+    cout << mid;
+    return;
+  }
+  
+}
+int main(){
+  
+  cin >> n >> m;
+  for(int i = 0; i < n; i++){
+    cin >> tree[i];
+  }
+  treecutting(1, TREE_MAX, m);
+  
+  return 0;
+}
