@@ -1,0 +1,43 @@
+#include<iostream>
+using namespace std;
+long long int n, k;
+int result;
+void bs(long long int start, long long int end, long long int search){
+  if(start > end){
+    return;
+  }
+  
+  
+  long long int mid = (start+end)/2;
+  long long int mok = 0;
+  long long int nam = 0;
+  long long int sum = 0;
+  for(int i = 1; i <= n; i++){
+    mok = mid/i;
+    nam = mid%i;
+    
+    if(mok >= n)
+    sum += n;
+    else
+    sum += mok;
+  }
+  
+  if(sum >= search){
+    result = mid;
+    bs(start, mid-1, search);
+  }
+  
+  else if(sum < search)
+  bs(mid+1, end, search);
+
+  
+}
+int main(){
+  
+  
+  cin >> n >> k;
+  
+  bs(1,n*n, k);
+  cout << result;
+  return 0;
+}
