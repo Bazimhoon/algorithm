@@ -1,0 +1,45 @@
+#include<iostream>
+#include<stack>
+using namespace std;
+const int MAX = 300;
+char alphabet[MAX];
+char ch[MAX];
+stack<char> st;
+string str[MAX];
+int main(){
+  
+  string plate;
+  cin >> plate;
+  int num = plate.length();
+  
+  alphabet[0] = 'a';
+  for(int i = 1; i <= 25; i++){
+    alphabet[i] = 'a'+ i;
+  }
+  int alpha_idx = 0;
+  int plate_idx = 0;
+  int str_idx = 0;
+  while(alpha_idx < num){
+    
+   str[str_idx++] = "push";
+   st.push(alphabet[alpha_idx++]);
+   
+   while(!st.empty()){
+     if(st.top() == plate[plate_idx]){
+       str[str_idx++] = "pop";
+       st.pop();
+       plate_idx++;
+     }
+     else break;
+   }
+  }
+  
+  if(!st.empty())
+  cout << "impossible";
+  else{
+    for(int i = 0; i < str_idx; i++){
+      cout << str[i] << endl;
+    }
+  }
+  return 0;
+}

@@ -1,0 +1,37 @@
+#include<iostream>
+#include<stack>
+#include<string>
+using namespace std;
+
+string str;
+stack<char> st;
+int main(){
+
+	cin >> str;
+	int num = str.length();
+	int str_idx = 0;
+
+	while (str_idx < num) {
+		st.push(str[str_idx++]);
+
+		if(st.size() > 0){
+		  if(str_idx >= num)
+		  break;
+		  
+		  while (st.top() == '(' && str[str_idx] == ')') {
+		  
+			st.pop();
+			str_idx++;
+
+			if(st.size() <= 0)
+			break;
+		}
+		}	
+	}
+	if (!st.empty())
+		cout << "NO";
+	else
+		cout << "YES";
+
+	return 0;
+}
