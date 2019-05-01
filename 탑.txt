@@ -1,0 +1,49 @@
+#include<iostream>
+#include<stack>
+using namespace std;
+typedef pair<int, int> pair_t;
+stack<pair_t> st;
+int main(){
+  
+  int n;
+  cin >> n;
+  int idx = 1;
+  int fix = 0;
+  int fix1 = 0;
+  for(int i = 1; i <= n; i++){
+    int a;
+    cin >> a;
+    
+    if(st.empty()){
+      st.push(make_pair(a,i));
+      cout << "0" << " ";
+    }
+    else{
+      if(st.top().first < a){
+        while(st.top().first < a){
+          st.pop();
+          
+          if(st.empty())
+          break;
+        }
+        
+        if(st.empty()){
+          cout << "0" << " ";
+          st.push(make_pair(a,i));
+          continue;
+        }
+        else{
+          cout << st.top().second << " ";
+          st.push(make_pair(a,i));
+        }
+        
+      }
+      else{
+        cout << st.top().second << " ";
+        st.push(make_pair(a,i));
+        
+      }
+    }
+  }
+  return 0;
+}
