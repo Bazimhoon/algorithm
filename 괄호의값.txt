@@ -1,0 +1,102 @@
+#include<iostream>
+#include<stack>
+#include<string>
+
+using namespace std;
+stack<int> st;
+
+int main(){
+  
+  string a;
+  cin >> a;
+  int num = a.length();
+  
+  for(int i = 0; i < num; i++){
+    if(a[i] == '('){
+      st.push(-2);
+    }
+    
+    if(a[i] == '['){
+      st.push(-3);
+    }
+    
+    
+    if(a[i] == ')'){
+      int sum = 0;
+      bool flag = false;
+
+      while(1){
+        if(st.empty() && flag == false){
+          cout << "0";
+          return 0;
+        }
+        if(st.empty())
+        break;
+        if(st.top() == -2){
+          st.pop();
+          flag = true;
+          break;
+        }
+        if(st.top() > 0){
+          sum += st.top();
+          st.pop();
+        }
+        else{
+          st.pop();
+        }
+      }
+      if(sum == 0){
+         st.push(2);
+      }
+      else{
+        sum *= 2;
+        st.push(sum);
+      }
+      
+    }
+    
+    if(a[i] == ']'){
+      int sum = 0;
+      bool flag = false;
+      while(1){
+        if(st.empty() && flag == false){
+          cout << "0";
+          return 0;
+        }
+        if(st.empty())
+        break;
+        if(st.top() == -3){
+          st.pop();
+          flag = true;
+          break;
+        }
+        if(st.top() > 0){
+          sum += st.top();
+          st.pop();
+        }
+        else{
+          st.pop();
+        }
+        }
+        if(sum == 0){
+          st.push(3);
+        }
+        
+        else{
+          sum *= 3;
+          st.push(sum);
+        }
+    }
+  }
+  int result = 0;
+  while(!st.empty()){
+    if(st.top() < 0){
+      result = 0;
+      break;
+    }
+    result += st.top();
+    st.pop();
+  }
+  cout << result;
+  return 0;
+}
