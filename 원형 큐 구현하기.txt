@@ -1,0 +1,82 @@
+#include<iostream>
+using namespace std;
+const int MAX = 200;
+int numCount = 0;
+struct Queue{
+  
+  int arr[MAX] = {0};
+  int front = 0;
+  int back = 0;
+  int capacity = 0;
+  
+  void Create(int x){
+    capacity = x;
+  }
+  
+  void Push(int x){
+    
+    if(numCount >= capacity){
+      cout << "Overflow" << endl;
+    }
+    else{
+      arr[back++] = x;
+      numCount++;
+      if(back >= capacity)
+      back = 0;
+    }
+  }
+  
+  void Pop(){
+    
+    if(numCount <= 0){
+      cout << "Underflow" << endl;
+    }
+    else{
+      arr[front++] = 0;
+      numCount--;
+      if(front >= capacity)
+      front = 0;
+    }
+    
+  }
+  
+  void Front(){
+    if(numCount <= 0){
+      cout << "NULL" << endl;
+    }
+    else{
+      cout << arr[front] << endl;
+    }
+  }
+  
+};
+int main(){
+  int n , m;
+  cin >> n >> m;
+  
+  Queue qu;
+  qu.Create(n);
+  for(int i = 0; i < m; i++){
+    int a;
+    cin >> a;
+    
+    switch(a){
+      case 1:
+      int b;
+      cin >> b;
+      qu.Push(b);
+      break;
+      
+      case 2:
+      qu.Pop();
+      break;
+      
+      case 3:
+      qu.Front();
+      break;
+    }
+  }
+  
+  
+  return 0;
+}

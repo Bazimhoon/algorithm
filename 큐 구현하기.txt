@@ -1,0 +1,77 @@
+#include<iostream>
+using namespace std;
+const int MAX = 200;
+struct Queue{
+  
+  int arr[MAX];
+  int size = 0;
+  int front = 0;
+  int back = 0;
+  int capacity;
+  
+  void create(int x){
+    capacity = x;
+  }
+  
+  void Push(int x){
+    if(back >= capacity){
+      cout << "Overflow" << endl;
+    }
+    else{
+      arr[back++] = x;
+    }
+  }
+  
+  void Pop(){
+    if(front == back){
+      cout << "Underflow" << endl;
+    }
+    else{
+      arr[front++] = 0;
+    }
+  }
+  
+  int Front(){
+    if(front == back){
+      return 0;
+    }
+    else{
+      return arr[front];
+    }
+  }
+  
+};
+int main(){
+  int n , m;
+  cin >> n >> m;
+  Queue qu;
+  qu.create(n);
+  for(int i = 0; i < m; i++){
+    int a;
+    cin >> a;
+    
+    switch(a){
+      case 1:
+      int b;
+      cin >> b;
+      qu.Push(b);
+      break;
+      
+      case 2:
+      qu.Pop();
+      break;
+      
+      case 3:
+      if(qu.Front() == 0){
+        cout << "NULL" << endl;
+      }
+      else{
+        cout << qu.Front() << endl;
+      }
+      break;
+    }
+  }
+  
+  
+  return 0;
+}
