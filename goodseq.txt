@@ -1,0 +1,63 @@
+#include<iostream>
+using namespace std;
+
+const int MAX = 100;
+int arr[MAX];
+int n;
+bool exit_flag = false;
+bool flag = false;
+void recursion(int depth) {
+	if (exit_flag == true)
+		return;
+	if (depth == n) {
+		
+		for (int i = 0; i < n; i++) {
+			cout << arr[i];
+		}
+		exit_flag = true;
+		return;
+	}
+
+	else {
+		for (int i = 1; i <= 3; i++) {
+			if (depth == 0) {
+				arr[depth] = i;
+				recursion(depth + 1);
+			}
+			else {
+				if (arr[depth - 1] == i)
+					continue;
+				else {
+					arr[depth] = i;
+					int cnt = 2;
+					while (cnt <= depth+1 / 2) {
+						for (int i = 0; i <= depth + 1 - (cnt * 2); i++) {
+							flag = false;
+							for (int p = i; p < i + cnt; p++) {
+								if (arr[p] != arr[p + cnt])
+									flag = true;
+							}
+							if (flag == false)
+								break;
+
+						}
+						if(flag == false)
+						break;
+						cnt++;
+					}
+					if(depth > 2 && flag == false)
+					continue;
+					recursion(depth + 1);
+				}
+			}
+		}
+	}
+}
+int main() {
+
+	cin >> n;
+
+	recursion(0);
+	return 0;
+
+}

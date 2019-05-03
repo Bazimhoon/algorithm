@@ -1,0 +1,26 @@
+#include<iostream>
+using namespace std;
+
+long long int recursion(int n, long long int m){
+  if(m == 1)
+  return n;
+  
+  long long int result;
+  if(m % 2 == 0){
+    result = recursion(n,m/2) * recursion(n,m/2);
+    result %= 10007;
+  }
+  else{
+    result = recursion(n,m/2) * recursion(n,m/2) * n;
+    result %= 10007;
+  }
+  return result;
+}
+int main(){
+  int n;
+  long long int m;
+  cin >> n >> m;
+  
+  cout << recursion(n, m);
+  return 0;
+}
