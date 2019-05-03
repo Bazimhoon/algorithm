@@ -1,0 +1,49 @@
+#include<iostream>
+using namespace std;
+const int MAX = 100010;
+int n;
+int arr[MAX];
+
+int sequence(int start, int end){
+  if(start >= end)
+  return arr[start];
+  
+  int mid = (start + end)/2;
+  int leftsize = sequence(start,mid);
+  int rightsize = sequence(mid+1, end);
+  
+  int max_leftsum = -3498434;
+  int leftsum = 0;
+  
+  for(int i = mid; i >= start; i--){
+    leftsum += arr[i];
+    if(max_leftsum < leftsum)
+    max_leftsum = leftsum;
+  }
+  
+  int max_rightsum = -349984;
+  int rightsum = 0;
+  
+  for(int i = mid+1; i <= end; i++){
+    rightsum += arr[i];
+    if(max_rightsum < rightsum)
+    max_rightsum = rightsum;
+  }
+  
+  int max_midsum = max_rightsum + max_leftsum;
+  
+  if(max_midsum >= rightsize && max_midsum >= leftsize)
+  return max_midsum;
+  else if(leftsize >= max_midsum && leftsize >= rightsize)
+  return leftsize;
+  else
+  return rightsize;
+}
+int main(){
+  cin >> n;
+  for(int i = 0; i < n; i++){
+    cin >> arr[i];
+  }
+  cout << sequence(0, n-1);
+  return 0;
+}
