@@ -1,0 +1,53 @@
+#include<iostream>
+using namespace std;
+
+const int MAX = 1100;
+typedef pair<int,int> pair_t;
+
+int main(){
+  int n, x, y;
+  int cnt = 0;
+  pair_t arr[MAX];
+  cin >> n >> x >> y;
+  
+  arr[0].first = 0;
+  arr[0].second = 0;
+  
+  for(int i = 0; i < n-1; i++){
+    int a,b;
+    cin >> a >> b;
+    
+    arr[b].first = a;
+    arr[b].second = arr[a].second + 1;
+    
+  }
+  
+  while(arr[x].second != arr[y].second){
+    if(arr[x].second > arr[y].second){
+      x = arr[x].first;
+      cnt++;
+    }
+      
+      else{
+        y = arr[y].first;
+        cnt++;
+      }
+      
+  }
+  
+  if(x == y)
+  cout << cnt;
+  else{
+    while(arr[x].first != arr[y].first){
+      x = arr[x].first;
+      y = arr[y].first;
+      cnt += 2;
+    }
+    if(arr[x].first == arr[y].first){
+      cnt += 2;
+      cout << cnt;
+    }
+  }
+  
+  return 0;
+}
