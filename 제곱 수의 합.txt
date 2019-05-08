@@ -1,0 +1,32 @@
+#include<iostream>
+using namespace std;
+
+const int MAX = 110000;
+int arr[MAX] = {0};
+
+int main(){
+  int n;
+  cin >> n;
+ 
+  int cnt = 1;
+  int fix = 0;
+  for(int i = 1; i <= n; i++){
+    if(cnt * cnt == i){
+      cnt++;
+      fix = i;
+      arr[i] = 1;
+    }
+    else{
+      int min = arr[i-fix] + 1;
+      for(int p = cnt-2; p >= 1; p--){
+        int pp = p*p;
+        int m = arr[pp] + arr[i-pp];
+        if(min > m)
+        min = m;
+      }
+      arr[i] = min;
+    }
+  }
+  cout << arr[n];
+  return 0;
+}

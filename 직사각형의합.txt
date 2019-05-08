@@ -1,0 +1,44 @@
+#include<iostream>
+using namespace std;
+const int MAX = 1100;
+
+int main(){
+  int n,m,q;
+  cin >> n >> m >> q;
+  
+  int arr[MAX][MAX];
+  int result[MAX][MAX];
+  
+  for(int i = 0; i < n; i++){
+    for(int p = 0; p < m; p++){
+      cin >> arr[i][p];
+    }
+  }
+  for(int i = 0; i < n; i++){
+    for(int p = 0; p < m; p++){
+      
+      if(p-1 < 0 && i-1 < 0)
+      result[i][p] = arr[i][p];
+      
+      else if(p-1 < 0 && i-1 >= 0)
+      result[i][p] = result[i-1][p] + arr[i][p];
+      
+      else if(i-1 < 0 && p-1 >= 0)
+      result[i][p] = result[i][p-1] + arr[i][p];
+      
+      else
+      result[i][p] = result[i][p-1] + result[i-1][p] - result[i-1][p-1]
+                      + arr[i][p];
+    }
+  }
+  
+  for(int i = 0; i < q; i++){
+    int a, b, c, d;
+    cin >> a >> b >> c >> d;
+    
+    int sum = 0;
+    sum = result[c][d] - result[c][b-1] - result[a-1][d] + result[a-1][b-1];
+    cout << sum << endl;
+  }
+  return 0;
+}

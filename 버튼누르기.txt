@@ -1,0 +1,57 @@
+#include<iostream>
+using namespace std;
+
+int arrR[1] = {0};
+int arrG[1] = {0};
+int arrB[1] = {0};
+int R[1] = {0};
+int G[1] = {0};
+int B[1] = {0};
+
+int main(){
+  int n;
+  cin >> n;
+  
+  for(int i = 0; i < n; i++){
+    int r, g, b;
+    cin >> r >> g >> b;
+    
+    if(i == 0){
+      R[0] = r;
+      G[0] = g;
+      B[0] = b;
+    }
+    else{
+      
+      if(arrR[0] < B[0] + r)
+      arrR[0] = B[0] + r;
+      
+      if(arrR[0] < G[0] + r)
+      arrR[0] = G[0] + r;
+      
+      if(arrG[0] < R[0] + g)
+      arrG[0] = R[0] + g;
+      
+      if(arrG[0] < B[0] + g)
+      arrG[0] = B[0] + g;
+      
+      if(arrB[0] < R[0] + b)
+      arrB[0] = R[0] + b;
+      
+      if(arrB[0] < G[0] + b)
+      arrB[0] = G[0] + b;
+      
+      R[0] = arrR[0];
+      G[0] = arrG[0];
+      B[0] = arrB[0];
+    }
+    
+  }
+  if(arrR[0] > arrG[0] && arrR[0] > arrB[0])
+  cout << arrR[0];
+  else if(arrG[0] > arrR[0] && arrG[0] > arrB[0])
+  cout << arrG[0];
+  else
+  cout << arrB[0];
+  return 0;
+}

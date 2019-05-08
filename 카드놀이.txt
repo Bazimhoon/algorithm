@@ -1,0 +1,30 @@
+#include<iostream>
+using namespace std;
+const int MAX = 110000;
+int arr[MAX] = {0};
+int result[MAX] = {0};
+
+int main(){
+  int n;
+  cin >> n;
+  for(int i = 1; i <= n; i++){
+    cin >> arr[i];
+  }
+  result[1] = arr[1];
+  result[2] = arr[1] + arr[2];
+  
+  for(int i = 3; i <= n; i++){
+    int a = result[i-2] + arr[i];
+    int b = result[i-3] + arr[i-1] + arr[i];
+    
+    if(a >= b && a >= result[i-1])
+    result[i] = a;
+    else if(b >= a && b >= result[i-1])
+    result[i] = b;
+    else
+    result[i] = result[i-1];
+  }
+  
+  cout << result[n];
+  return 0;
+}

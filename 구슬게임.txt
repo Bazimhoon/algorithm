@@ -1,0 +1,12 @@
+#include<iostream>
+using namespace std;
+
+int main() { // 철수가 가져간 다음 4개가 남는다면 철수가 무조건 이길 수 있음
+	int n;
+	cin >> n;
+	if (n % 4 == 0)
+		cout << "NO";
+	else
+		cout << "YES";
+	return 0;
+}
