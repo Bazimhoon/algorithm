@@ -1,0 +1,32 @@
+#include<iostream>
+using namespace std;
+const int MAX = 1000100;
+int arr[MAX];
+
+int main(){
+  int n;
+  cin >> n;
+  for(int i = 0; i < n; i++){
+    int a;
+    cin >> a;
+    
+    if(i == 0)
+    arr[i] = a;
+    else{
+      int p = arr[i-1] + a;
+      if(p > a)
+      arr[i] = p;
+      else
+      arr[i] = a;
+    }
+    
+  }
+  int max = -3449;
+  for(int i = 0; i < n; i++){
+    if(max < arr[i])
+    max = arr[i];
+  }
+  
+  cout << max;
+  return 0;
+}
