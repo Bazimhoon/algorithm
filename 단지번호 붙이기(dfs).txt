@@ -1,0 +1,58 @@
+#include<iostream>
+#include<algorithm>
+using namespace std;
+
+const int MAX = 30;
+int cnt = 0;
+int village = 0;
+int arr[MAX][MAX];
+int result[MAX];
+int result_idx = 0;
+int dx[4] = {-1,0,1,0};
+int dy[4] = {0,1,0,-1};
+int n;
+
+int dfs(int row, int col){
+  
+  arr[row][col] = 0;
+  cnt++;
+  for(int i = 0; i < 4; i++){
+    int row_p = row + dx[i];
+    int col_p = col + dy[i];
+    
+    if(row_p < 0 || col_p < 0 || row_p >= n || col_p >= n 
+     || arr[row_p][col_p] == 0)
+    continue;
+    
+    else{
+      dfs(row_p, col_p);
+    }
+  }
+
+  return cnt;
+}
+int main(){
+  
+  
+  cin >> n;
+  for(int i = 0; i < n; i++){
+    for(int p = 0; p < n; p++){
+      scanf("%1d", &arr[i][p]);
+    }
+  }
+  for(int i = 0; i < n; i++){
+    for(int p = 0; p < n; p++){
+      if(arr[i][p] == 1){
+        village++;
+        result[result_idx++] = dfs(i, p);
+        cnt = 0;
+      }
+    }
+  }
+  cout << village << endl;
+  sort(result, result+village);
+  for(int i = 0; i < village; i++){
+    cout << result[i] << endl;
+  }
+  return 0;
+}

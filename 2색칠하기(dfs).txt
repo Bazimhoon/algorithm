@@ -1,0 +1,53 @@
+#include<iostream>
+#include<vector>
+
+using namespace std;
+const int MAX = 10010;
+
+vector<int> vec[MAX];
+int color[MAX];
+int check[MAX];
+int coll = 1;
+bool dfs(int start, int col){
+  check[start] = 1;
+  color[start] = col;
+  
+  for(int i = 0; i < vec[start].size(); i++){
+    int num = vec[start][i];
+    
+    if(check[num] == 0){
+      dfs(num, (col * -1));
+    }
+    else{
+      if(color[num] == col){
+        return false;
+      }
+      
+    }
+  }
+  return true;
+}
+int main(){
+  int n,m;
+  cin >> n >> m;
+  
+  for(int i = 0; i < m; i++){
+    int a, b;
+    cin >> a >> b;
+    
+    vec[a].push_back(b);
+    vec[b].push_back(a);
+  }
+  
+  for(int i = 0; i < n; i++){
+    if(!check[i] && vec[i].size() != 0){
+      bool flag = dfs(i, coll);
+      if(flag == false){
+        cout << "NO";
+        return 0;
+      }
+    }
+  }
+  cout << "YES";
+  return 0;
+}
